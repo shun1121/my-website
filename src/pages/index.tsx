@@ -6,19 +6,19 @@ import { HeaderSimple } from "../components/header";
 
 const links = [
   {
-    link: "",
+    link: "/about",
     label: "About"
   },
   {
-    link: "",
+    link: "/blog",
     label: "Blog"
   },
   {
-    link: "",
+    link: "/portfolio",
     label: "Portfolio"
   },
   {
-    link: "",
+    link: "contact",
     label: "Contact"
   }
 ]
