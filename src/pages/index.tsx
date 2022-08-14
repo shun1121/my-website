@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../../src/styles/Home.module.css";
 import { HeaderSimple } from "../components/header";
 import { Footer } from "../components/footer"
+import Top from "../components/top";
 
 const links = [
   {
@@ -33,6 +34,7 @@ const Home: NextPage = () => {
       </Head>
       <HeaderSimple links={links} />
 
+      <Top name="私" />
       <div className="h-screen">
         hello
       </div>
