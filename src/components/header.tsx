@@ -54,8 +54,6 @@ export const HeaderSimple = ({ links }: HeaderProps) => {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
-  console.log(links)
-  console.log(active)
 
   const items = links.map((link) => (
     // <Link key={link.label} href="https://ui.mantine.dev/#main">
