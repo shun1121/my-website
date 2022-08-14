@@ -4,6 +4,7 @@ import styles from "../../src/styles/Home.module.css";
 import { HeaderSimple } from "../components/header";
 import { Footer } from "../components/footer"
 import Top from "../components/top";
+import BlogList from "../components/blogList";
 
 const links = [
   {
@@ -24,6 +25,34 @@ const links = [
   }
 ]
 
+const blogList = [
+  {
+    title: "This is a header",
+    description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ",
+    date: "2022.07.11"
+  },
+  {
+    title: "This is a header",
+    description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ",
+    date: "2022.07.11"
+  },
+  {
+    title: "This is a header",
+    description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ",
+    date: "2022.07.11"
+  },
+  {
+    title: "This is a header",
+    description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ",
+    date: "2022.07.11"
+  },
+  {
+    title: "This is a header",
+    description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. ",
+    date: "2022.07.11"
+  }
+]
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -35,9 +64,7 @@ const Home: NextPage = () => {
       <HeaderSimple links={links} />
 
       <Top name="私" />
-      <div className="h-screen">
-        hello
-      </div>
+      <BlogList blogList={blogList} />
 
       <Footer />
     </div>
