@@ -5,6 +5,7 @@ import { HeaderSimple } from "../components/header";
 import { Footer } from "../components/footer"
 import Top from "../components/top";
 import BlogList from "../components/blogList";
+import PortfolioSection from "../components/portfolioSection";
 
 const links = [
   {
@@ -53,6 +54,45 @@ const blogList = [
   }
 ]
 
+const portfolio = [
+  {
+    imgUrl: "/images/kv.jpg",
+    title: "IT KINGDOM",
+    description: "当サロンのLPページ。React、Next.js、TypeScriptなどのモダンな技術を用いて作られています。初心者にちょうど良い難易度の制作物です。",
+    date: "2022.07.11"
+  },
+  {
+    imgUrl: "/images/kv.jpg",
+    title: "IT KINGDOM",
+    description: "当サロンのLPページ。React、Next.js、TypeScriptなどのモダンな技術を用いて作られています。初心者にちょうど良い難易度の制作物です。",
+    date: "2022.07.11"
+  },
+  {
+    imgUrl: "/images/kv.jpg",
+    title: "IT KINGDOM",
+    description: "当サロンのLPページ。React、Next.js、TypeScriptなどのモダンな技術を用いて作られています。初心者にちょうど良い難易度の制作物です。",
+    date: "2022.07.11"
+  },
+  {
+    imgUrl: "/images/kv.jpg",
+    title: "IT KINGDOM",
+    description: "当サロンのLPページ。React、Next.js、TypeScriptなどのモダンな技術を用いて作られています。初心者にちょうど良い難易度の制作物です。",
+    date: "2022.07.11"
+  },
+  {
+    imgUrl: "/images/kv.jpg",
+    title: "IT KINGDOM",
+    description: "当サロンのLPページ。React、Next.js、TypeScriptなどのモダンな技術を用いて作られています。初心者にちょうど良い難易度の制作物です。",
+    date: "2022.07.11"
+  },
+  {
+    imgUrl: "/images/kv.jpg",
+    title: "IT KINGDOM",
+    description: "当サロンのLPページ。React、Next.js、TypeScriptなどのモダンな技術を用いて作られています。初心者にちょうど良い難易度の制作物です。",
+    date: "2022.07.11"
+  },
+]
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -62,9 +102,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderSimple links={links} />
-
       <Top name="私" />
       <BlogList blogList={blogList} />
+      <PortfolioSection portfolioSection={portfolio} />
 
       <Footer />
     </div>
