@@ -74,7 +74,7 @@ export const HeaderSimple = ({ links }: HeaderProps) => {
   ));
 
   return (
-    <Header height={60} mb={120}>
+    <Header height={60}>
       <Container className={classes.header}>
         <div className='font-bold'>My Website</div>
         <Group spacing={5} className={classes.links}>
