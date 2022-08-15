@@ -22,7 +22,6 @@ const Home: NextPage = () => {
       <Top name="私" />
       <BlogListSection blogList={blogList} />
       <PortfolioSection portfolioSection={portfolio} />
-
       <Footer />
     </div>
   );
