@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Container, createStyles, Stack, Text, Title } from '@mantine/core';
+import { Container, createStyles, Text, Title } from '@mantine/core';
 import { HeaderSimple } from '../components/header';
 import { links } from '../components/link';
 import { Footer } from '../components/footer';
