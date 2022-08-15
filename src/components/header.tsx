@@ -52,10 +52,11 @@ interface HeaderProps {
 
 export const HeaderSimple = ({ links }: HeaderProps) => {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  const [active, setActive] = useState("");
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
+    // ヘッダーのタブの色変更方法を検討
     // <Link key={link.label} href="https://ui.mantine.dev/#main">
       <Anchor
         key={link.label}
@@ -63,6 +64,8 @@ export const HeaderSimple = ({ links }: HeaderProps) => {
         className={cx(classes.link, { [classes.linkActive]: active === link.link })}
         // onClick={(event) => {
         //   event.preventDefault();
+        //   console.log(event)
+        //   console.log(link)
         //   setActive(link.link);
         // }}
       >
@@ -74,7 +77,11 @@ export const HeaderSimple = ({ links }: HeaderProps) => {
   return (
     <Header height={60}>
       <Container className={classes.header}>
-        <div className='font-bold'>My Website</div>
+        <Link href='/'>
+          <a className='font-bold'>
+            My Website
+          </a>
+        </Link>
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
