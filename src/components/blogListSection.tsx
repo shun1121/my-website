@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BlogList: FC<BlogList> = ({blogList}) => {
+const BlogListSection: FC<BlogList> = ({blogList}) => {
   const { classes } = useStyles();
 
   return (
@@ -51,4 +51,4 @@ const BlogList: FC<BlogList> = ({blogList}) => {
   )
 }
 
-export default BlogList
+export default BlogListSection
