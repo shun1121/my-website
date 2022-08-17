@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Button, Container, createStyles, Stack, Text, Title } from '@mantine/core';
+import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
+import ButtonComponent from './button';
 
 type BlogList = {
   blogList: {    
@@ -59,11 +60,7 @@ const BlogListSection: FC<BlogList> = ({blogList}) => {
           </a>
         </Link>
       ))}
-      <Stack align="center">
-        <Button className="bg-black" color="dark" radius="xl" size="lg">
-          View All
-        </Button>
-      </Stack>
+      <ButtonComponent text="View All" />
     </Container>
   )
 }
