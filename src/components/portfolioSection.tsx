@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Button, Container, createStyles, Grid, Image, Stack, Text, Title } from '@mantine/core';
+import { Container, createStyles, Grid, Image, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
+import ButtonComponent from './button';
 
 type PortfolioSection = {
   portfolioSection: {
@@ -72,11 +73,7 @@ const PortfolioSection: FC<PortfolioSection> = ({portfolioSection}) => {
           </Grid.Col>
         ))}
       </Grid>
-      <Stack align="center" className='mt-8'>
-        <Button className="bg-black" color="dark" radius="xl" size="lg">
-          View All
-        </Button>
-      </Stack>
+      <ButtonComponent text="View All" />
     </Container>
   )
 }
