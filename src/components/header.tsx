@@ -57,13 +57,13 @@ export const HeaderSimple = ({ links }: HeaderProps) => {
 
   const items = links.map((link) => (
     // ヘッダーのタブの色変更方法を検討
-    // <Link key={link.label} href="https://ui.mantine.dev/#main">
+    <Link key={link.label} href="https://ui.mantine.dev/#main">
       <Anchor
         key={link.label}
         href={link.link}
         className={cx(classes.link, { [classes.linkActive]: active === link.link })}
         // onClick={(event) => {
-        //   event.preventDefault();
+        //   // event.preventDefault();
         //   console.log(event)
         //   console.log(link)
         //   setActive(link.link);
@@ -71,7 +71,7 @@ export const HeaderSimple = ({ links }: HeaderProps) => {
       >
         {link.label}
       </Anchor>
-    // </Link>
+    </Link>
   ));
 
   return (
