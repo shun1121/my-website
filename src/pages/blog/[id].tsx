@@ -1,9 +1,6 @@
 import React from 'react';
 import { Container, createStyles, Text, Title } from '@mantine/core';
 import { blogList } from "../../components/blogList";
-import { HeaderSimple } from '../../components/header';
-import { links } from '../../components/link';
-import { Footer } from '../../components/footer';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 type Blog = {
@@ -33,7 +30,6 @@ const Portfolio:NextPage<Blog> = (props) => {
 
   return (
     <div>
-      <HeaderSimple links={links} />
       <Container className='h-screen'>
         <Title order={1} className={classes.heading}>{props.data.title}</Title>
         <Text className='my-8'>
@@ -43,7 +39,6 @@ const Portfolio:NextPage<Blog> = (props) => {
           {props.data.description}
         </Text>
       </Container>
-      <Footer />
     </div>
   )
 }
