@@ -2,9 +2,10 @@ import React, { FC, ReactNode } from 'react';
 import { links } from '../components/link';
 import { Footer } from '../components/footer';
 import { useState } from 'react';
-import { createStyles, Header, Container, Group, Burger, Anchor, Stack, Text } from '@mantine/core';
+import { createStyles, Header, Container, Group, Burger, Stack } from '@mantine/core';
 // import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
+import { Toggle } from './toggle';
 
 
 type Props = {
@@ -26,11 +27,19 @@ const useStyles = createStyles((theme) => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
+    // top: '0',
+    // bottom: '0',
+    // right: '0',
     alignItems: 'center',
     height: '100%',
+    '@media (max-width: 400px)': {
+      justifyContent: 'space-between',
+    },
   },
 
   links: {
+    display: 'flex',
+    // justifyContent: 'flex-end',
     [theme.fn.smallerThan('xs')]: {
       display: 'none',
     },
@@ -49,8 +58,8 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
+    fontSize: theme.fontSizes.md,
+    fontWeight: 700,
 
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -71,7 +80,6 @@ const Layout: FC<Props> = (props) => {
   const [opened, setOpened] = useState(false);
   const [active, setActive] = useState("");
   const { classes, cx } = useStyles();
-  console.log(opened)
 
   const toggle = () => {
     setOpened(!opened)
@@ -98,10 +106,12 @@ const Layout: FC<Props> = (props) => {
               My Website
             </a>
           </Link>
-          <Group spacing={5} className={classes.links}>
-            {items}
-          </Group>
-
+          {/* <Container className='flex'> */}
+            <Group spacing={5} className={classes.links}>
+              {items}
+            </Group>
+            <Toggle />
+          {/* </Container> */}
         </Container>
       </Header>
         {opened ? (
