@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
-import { Container, createStyles, Title, TextInput, Button, Group, Textarea } from '@mantine/core';
-import { HeaderSimple } from '../components/header';
-import { links } from '../components/link';
-import { Footer } from '../components/footer';
+import { Container, createStyles, Title, TextInput, Group, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import ButtonComponent from '../components/button';
 
@@ -32,7 +29,6 @@ const About: FC = () => {
 
   return (
     <div>
-      <HeaderSimple links={links} />
       <Container className='h-screen'>
         <Title order={1} className={classes.heading}>Contact</Title>
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
@@ -44,7 +40,6 @@ const About: FC = () => {
           </Group>
         </form>
       </Container>
-      <Footer />
     </div>
   )
 }

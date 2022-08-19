@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Text, Title } from '@mantine/core';
-import { HeaderSimple } from '../components/header';
-import { links } from '../components/link';
-import { Footer } from '../components/footer';
 
 
 type BlogList = {
@@ -25,12 +22,6 @@ const useStyles = createStyles((theme) => ({
       paddingBottom: '1.5rem',
     },
   },
-  snsIcons: {
-    display: 'flex',
-    '@media (max-width: 768px)': {
-      marginTop: '2.5rem',
-    },
-  },
 }));
 
 const About: FC<BlogList> = ({blogList}) => {
@@ -38,7 +29,6 @@ const About: FC<BlogList> = ({blogList}) => {
 
   return (
     <div>
-      <HeaderSimple links={links} />
       <Container className='h-screen'>
         <Title order={1} className={classes.heading}>About</Title>
         <Text className='text-3xl my-8'>
@@ -48,7 +38,6 @@ const About: FC<BlogList> = ({blogList}) => {
           新卒のフロントエンドエンジニアです。
         </Text>
       </Container>
-      <Footer />
     </div>
   )
 }
