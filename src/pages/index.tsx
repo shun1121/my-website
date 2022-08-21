@@ -6,6 +6,9 @@ import BlogListSection from "../components/blogListSection";
 import PortfolioSection from "../components/portfolioSection";
 import { blogList } from "../components/blogList";
 import { portfolio } from "../components/portfolioList";
+import Github from "../components/githubComponent";
+import { githubList } from "../components/gitHubList";
+import { Group } from "@mantine/core";
 
 const Home: NextPage = () => {
   return (
@@ -18,6 +21,9 @@ const Home: NextPage = () => {
       <Top name="私" />
       <BlogListSection blogList={blogList} />
       <PortfolioSection portfolioSection={portfolio} />
+      <Group position="center">
+        <Github github={githubList} />
+      </Group>
     </div>
   );
 };
