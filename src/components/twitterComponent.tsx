@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import ButtonComponent from './button';
 
-type Github = {
-  github: {
-    repositoryName: string
-    description: string
+type Twitter = {
+  twitter: {
+    name: string
+    tweet: string
   }[]
 }
 
@@ -23,27 +23,27 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Github: FC<Github> = ({github}) => {
+const Twitter: FC<Twitter> = ({twitter}) => {
   const { classes } = useStyles();
 
   return (
     // <div>
       <Container className='w-1/2'>
-      <Title order={1} className={classes.heading}>GitHub</Title>
-      {github.map((list, index) => (
+      <Title order={1} className={classes.heading}>Twitter</Title>
+      {twitter.map((list, index) => (
         // <Link key={index} href={`/blog/${index}`} passHref>
         //   <a>
             <Stack key={index} className='mb-6'>
-              <Text className='font-bold text-lg'>{list.repositoryName}</Text>
-              <Text>{list.description}</Text>
+              <Text className='font-bold text-lg'>{list.name}</Text>
+              <Text>{list.tweet}</Text>
             </Stack>
         //   </a>
         // </Link>
       ))}
-      <ButtonComponent text="View on GitHub" />
+      <ButtonComponent text="View on Twitter" />
     </Container>
     // </div>
   )
 }
 
-export default Github
+export default Twitter
