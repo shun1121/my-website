@@ -13,7 +13,7 @@ type BlogList = {
 const Blog: FC<BlogList> = () => {
   return (
     <div>
-      <BlogListSection blogList={blogList} />
+      {/* <BlogListSection blogList={blogList} /> */}
     </div>
   )
 }
