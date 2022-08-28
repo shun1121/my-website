@@ -1,16 +1,27 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import styles from "../../src/styles/Home.module.css";
 import Top from "../components/top";
 import BlogListSection from "../components/blogListSection";
 import PortfolioSection from "../components/portfolioSection";
-import { blogList } from "../components/blogList";
+// import { blogList } from "../components/blogList";
 import { portfolio } from "../components/portfolioList";
 import Github from "../components/githubComponent";
 import { githubList } from "../components/gitHubList";
-import { Group } from "@mantine/core";
+import { Group, SimpleGrid } from "@mantine/core";
+import Twitter from "../components/twitterComponent";
+import { twitterList } from "../components/twitterList";
+import { client } from '../libs/client'
+import { MicroCMSListResponse } from "microcms-js-sdk";
 
-const Home: NextPage = () => {
+type Blog = {
+  title: string
+  content: string
+}
+
+const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
+  // console.log(props.contents)
+  const blogList = props.contents
   return (
     <div className={styles.container}>
       <Head>
@@ -19,13 +30,27 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Top name="私" />
+      {/* {props.contents.map((content) => {
+        return <li key={content.id}>{content.title}</li>
+      })} */}
       <BlogListSection blogList={blogList} />
       <PortfolioSection portfolioSection={portfolio} />
-      <Group position="center">
+      <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-      </Group>
+        <Twitter twitter={twitterList} />
+      </SimpleGrid>
     </div>
   );
 };
+
+export const getStaticProps: GetStaticProps = async () => {
+  const data = await client
+  .getList({
+    endpoint: 'blogs',
+  });
+  return {
+    props: data,
+  }
+}
 
 export default Home;
