@@ -1,15 +1,11 @@
 import React from 'react';
 import { Container, createStyles, Text, Title } from '@mantine/core';
-import { blogList } from "../../components/blogList";
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { client } from '../../libs/client';
+import { Blog } from '..';
+import { MicroCMSContentId, MicroCMSDate } from 'microcms-js-sdk';
 
-type Blog = {
-  data: {
-    title: string
-    description: string
-    date: string
-  }
-}
+type Props = Blog & MicroCMSContentId & MicroCMSDate
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -25,41 +21,41 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Portfolio:NextPage<Blog> = (props) => {
+const Portfolio: NextPage<Props> = (props) => {
   const { classes } = useStyles();
 
   return (
     <div>
       <Container className='h-screen'>
-        <Title order={1} className={classes.heading}>{props.data.title}</Title>
-        <Text className='my-8'>
-          {props.data.date}
-        </Text>
+        <Title order={1} className={classes.heading}>{props.title}</Title>
         <Text>
-          {props.data.description}
+          {props.publishedAt}
         </Text>
+        <Text dangerouslySetInnerHTML={{ __html: props.content }} />
       </Container>
     </div>
   )
 }
 
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
-  const list = blogList
-  const ids = list.map((_, index) => `/blog/${index}`)
+  const data = await client.getList({endpoint: 'blogs'});
+  const ids = data.contents.map((content) => `/blog/${content.id}`)
   return {
     paths: ids,
     fallback: false,
   }
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<{}, { id: string }> = async (context) => {
   if (!context.params) {
     return { notFound: true }
   }
-  const blogId = Number(context.params.id)
-  const data = blogList[blogId]
+  const data = await client.getListDetail<Blog>({
+    endpoint: "blogs",
+    contentId: context.params.id,
+  })
   return {
-    props: { data },
+    props: data,
   };
 }
 
