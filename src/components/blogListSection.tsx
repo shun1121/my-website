@@ -2,12 +2,15 @@ import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
 import ButtonComponent from './button';
+import { client } from '../libs/client';
+import { GetStaticProps } from 'next';
 
 type BlogList = {
   blogList: {    
     title: string
-    description: string
-    date: string
+    content: string
+    // description: string
+    // date: string
   }[]
 }
 
@@ -45,6 +48,7 @@ const useStyles = createStyles((theme) => ({
 
 const BlogListSection: FC<BlogList> = ({blogList}) => {
   const { classes } = useStyles();
+  console.log(blogList)
 
   return (
     <Container>
@@ -54,8 +58,11 @@ const BlogListSection: FC<BlogList> = ({blogList}) => {
           <a>
             <Stack key={index} className='mb-6'>
               <Title order={2}>{list.title}</Title>
-              <Text>{list.description}</Text>
-              <Text>{list.date}</Text>
+              <Text
+                dangerouslySetInnerHTML={{
+                  __html: list.content
+                }} />
+              {/* <Text>{list.date}</Text> */}
             </Stack>
           </a>
         </Link>
@@ -64,5 +71,17 @@ const BlogListSection: FC<BlogList> = ({blogList}) => {
     </Container>
   )
 }
+
+// export const getStaticProps: GetStaticProps = async () => {
+//   const data = await client
+//   .getList({
+//     endpoint: 'blogs',
+//   });
+//   return {
+//     props: {
+//       props: data,
+//     },
+//   }
+// }
 
 export default BlogListSection
