@@ -13,6 +13,7 @@ import { client } from '../libs/client'
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import Link from "next/link";
 import ButtonComponent from "../components/button";
+import dayjs from 'dayjs'
 
 export type Blog = {
   title: string
@@ -75,7 +76,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
                   dangerouslySetInnerHTML={{
                     __html: list.content
                   }} />
-                {/* <Text>{list.date}</Text> */}
+                {dayjs(list.createdAt).format('YYYY年MM月DD日')}
               </Stack>
             </a>
           </Link>

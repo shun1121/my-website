@@ -6,6 +6,7 @@ import { client } from '../libs/client';
 import { GetStaticProps, NextPage } from 'next';
 import { MicroCMSListResponse } from 'microcms-js-sdk';
 import { Blog } from '../pages';
+import dayjs from 'dayjs'
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -57,7 +58,7 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
                 dangerouslySetInnerHTML={{
                   __html: list.content
                 }} />
-              {/* <Text>{list.date}</Text> */}
+              {dayjs(list.updatedAt).format('YYYY年MM月DD日')}
             </Stack>
           </a>
         </Link>
