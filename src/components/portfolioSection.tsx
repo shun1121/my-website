@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Grid, Image, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
-import ButtonComponent from './button';
+import LinkButton from './button';
 
 type PortfolioSection = {
   portfolioSection: {
@@ -73,7 +73,7 @@ const PortfolioSection: FC<PortfolioSection> = ({portfolioSection}) => {
           </Grid.Col>
         ))}
       </Grid>
-      <ButtonComponent text="View All" />
+      <LinkButton text="View All" href="/portfolio" />
     </Container>
   )
 }

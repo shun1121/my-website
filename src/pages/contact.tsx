@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Title, TextInput, Group, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import ButtonComponent from '../components/button';
+import LinkButton from '../components/button';
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -36,7 +36,7 @@ const About: FC = () => {
           <TextInput className='mb-5' label="Name" placeholder="Taro Yamada" {...form.getInputProps('name')} />
           <Textarea className='mb-5' label="Your message" placeholder="I want to order your goods" {...form.getInputProps('message')} />
           <Group position="center" mt="xl">
-            <ButtonComponent text="Send Message" type="submit" />
+            <LinkButton text="Send Message" type="submit" href="" />
           </Group>
         </form>
       </Container>
