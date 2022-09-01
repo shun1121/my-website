@@ -12,8 +12,10 @@ import { twitterList } from "../components/twitterList";
 import { client } from '../libs/client'
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import Link from "next/link";
-import ButtonComponent from "../components/button";
 import dayjs from 'dayjs'
+import { useMediaQuery } from "react-responsive"
+import { useEffect, useState } from "react";
+import LinkButton from "../components/button";
 
 export type Blog = {
   title: string
@@ -55,8 +57,61 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
+  const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
-  const blogList = props.contents
+  const isMobile = useMediaQuery({
+    query: '(max-width: 400px)'
+  })
+  const isLaptop = useMediaQuery({
+    query: '(min-width: 401px)'
+  })
+  
+  const blog = () => {
+    if (isClient) {
+      if (isMobile) {
+        return (
+          props.contents.slice(0, 4).map((list, index) => (
+            <Link key={index} href={`/blog/${list.id}`} passHref>
+            <a>
+              <Stack key={index} className='mb-6'>
+                <Title order={2}>{list.title}</Title>
+                <Text
+                  dangerouslySetInnerHTML={{
+                    __html: list.content
+                  }} />
+                {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+              </Stack>
+            </a>
+          </Link>
+          ))
+        );
+      } else if(isLaptop) {
+        return (
+          props.contents.slice(0, 5).map((list, index) => (
+            <Link key={index} href={`/blog/${list.id}`} passHref>
+              <a>
+                <Stack key={index} className='mb-6'>
+                  <Title order={2}>{list.title}</Title>
+                  <Text
+                    dangerouslySetInnerHTML={{
+                      __html: list.content
+                    }} />
+                  {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+                </Stack>
+              </a>
+            </Link>
+          ))
+        )
+      }
+    } else {
+      return <></>;
+    }
+  };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -67,7 +122,22 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
       <Top name="私" />
       <Container>
         <Title order={1} className={classes.heading}>Blog</Title>
-        {props.contents.map((list, index) => (
+        <div>{blog()}</div>
+        {/* {isMobile && props.contents.slice(0, 4).map((list, index) => (
+          <Link key={index} href={`/blog/${list.id}`} passHref>
+          <a>
+            <Stack key={index} className='mb-6'>
+              <Title order={2}>{list.title}</Title>
+              <Text
+                dangerouslySetInnerHTML={{
+                  __html: list.content
+                }} />
+              {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+            </Stack>
+          </a>
+        </Link>
+        ))} */}
+        {/* {isLaptop && props.contents.slice(0, 5).map((list, index) => (
           <Link key={index} href={`/blog/${list.id}`} passHref>
             <a>
               <Stack key={index} className='mb-6'>
@@ -80,9 +150,9 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
               </Stack>
             </a>
           </Link>
-        ))}
-        <ButtonComponent text="View All" />
-    </Container>
+        ))} */}
+        <LinkButton text="View All" href="/blog" />
+      </Container>
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />

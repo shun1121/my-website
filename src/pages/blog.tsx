@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
-import ButtonComponent from '../components/button';
 import { client } from '../libs/client';
 import { GetStaticProps, NextPage } from 'next';
 import { MicroCMSListResponse } from 'microcms-js-sdk';
 import { Blog } from '../pages';
 import dayjs from 'dayjs'
+import LinkButton from '../components/button';
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -63,7 +63,7 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
           </a>
         </Link>
       ))}
-      <ButtonComponent text="View All" />
+      <LinkButton text="View All" href="/blog" />
     </Container>
   )
 }
