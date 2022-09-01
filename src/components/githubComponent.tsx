@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
-import ButtonComponent from './button';
+import LinkButton from './button';
 
 type Github = {
   github: {
@@ -40,7 +40,7 @@ const Github: FC<Github> = ({github}) => {
         //   </a>
         // </Link>
       ))}
-      <ButtonComponent text="View on GitHub" />
+      <LinkButton text="View on GitHub" href="/" />
     </Container>
     // </div>
   )

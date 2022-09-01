@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
-import ButtonComponent from './button';
+import LinkButton from './button';
 
 type Twitter = {
   twitter: {
@@ -40,7 +40,7 @@ const Twitter: FC<Twitter> = ({twitter}) => {
         //   </a>
         // </Link>
       ))}
-      <ButtonComponent text="View on Twitter" />
+      <LinkButton text="View on Twitter" href="/" />
     </Container>
     // </div>
   )
