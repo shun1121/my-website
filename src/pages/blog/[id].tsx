@@ -32,7 +32,7 @@ const Portfolio: NextPage<Props> = (props) => {
         <Text>
           {dayjs(props.updatedAt).format('YYYY年MM月DD日')}
         </Text>
-        <Text dangerouslySetInnerHTML={{ __html: props.body }} />
+        <Text dangerouslySetInnerHTML={{ __html: props.content }} />
       </Container>
     </div>
   )

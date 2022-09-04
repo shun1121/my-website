@@ -19,7 +19,7 @@ import LinkButton from "../components/button";
 
 export type Blog = {
   title: string
-  body: string
+  content: string
 }
 
 type Props = MicroCMSListResponse<Blog>
@@ -65,7 +65,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
-  console.log(props.contents)
+  
   const blog = () => {
     if (isClient) {
       if (isMobile) {
@@ -77,7 +77,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
                 <Title order={2}>{list.title}</Title>
                 <Text
                   dangerouslySetInnerHTML={{
-                    __html: list.body
+                    __html: list.content
                   }} />
                 {dayjs(list.createdAt).format('YYYY年MM月DD日')}
               </Stack>
@@ -94,7 +94,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
                   <Title order={2}>{list.title}</Title>
                   <Text
                     dangerouslySetInnerHTML={{
-                      __html: list.body
+                      __html: list.content
                     }} />
                   {dayjs(list.createdAt).format('YYYY年MM月DD日')}
                 </Stack>
