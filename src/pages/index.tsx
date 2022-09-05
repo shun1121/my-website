@@ -65,7 +65,6 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
-  console.log(props)
   
   const blog = () => {
     if (isClient) {

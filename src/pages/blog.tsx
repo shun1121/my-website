@@ -72,7 +72,6 @@ export const getStaticProps: GetStaticProps = async () => {
   .getList({
     endpoint: 'blogs',
   });
-  console.log(data)
   return {
     props: data,
     // props: data.contents これだとエラーが出る。
