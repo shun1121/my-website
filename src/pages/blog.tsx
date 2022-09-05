@@ -56,7 +56,7 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
               <Title order={2}>{list.title}</Title>
               <Text
                 dangerouslySetInnerHTML={{
-                  __html: list.content
+                  __html: list.body
                 }} />
               {dayjs(list.updatedAt).format('YYYY年MM月DD日')}
             </Stack>
