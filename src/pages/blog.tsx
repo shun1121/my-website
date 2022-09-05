@@ -44,7 +44,6 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
   const { classes } = useStyles();
   const blogList = props.contents
   // const blogList = props　これだとエラーが出る。
-  console.log(props)
 
   return (
     <Container>

@@ -124,34 +124,6 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
       <Container>
         <Title order={1} className={classes.heading}>Blog</Title>
         <div>{blog()}</div>
-        {/* {isMobile && props.contents.slice(0, 4).map((list, index) => (
-          <Link key={index} href={`/blog/${list.id}`} passHref>
-          <a>
-            <Stack key={index} className='mb-6'>
-              <Title order={2}>{list.title}</Title>
-              <Text
-                dangerouslySetInnerHTML={{
-                  __html: list.content
-                }} />
-              {dayjs(list.createdAt).format('YYYY年MM月DD日')}
-            </Stack>
-          </a>
-        </Link>
-        ))} */}
-        {/* {isLaptop && props.contents.slice(0, 5).map((list, index) => (
-          <Link key={index} href={`/blog/${list.id}`} passHref>
-            <a>
-              <Stack key={index} className='mb-6'>
-                <Title order={2}>{list.title}</Title>
-                <Text
-                  dangerouslySetInnerHTML={{
-                    __html: list.content
-                  }} />
-                {dayjs(list.createdAt).format('YYYY年MM月DD日')}
-              </Stack>
-            </a>
-          </Link>
-        ))} */}
         <LinkButton text="View All" href="/blog" />
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
