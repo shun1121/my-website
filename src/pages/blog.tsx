@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
-import { client } from '../utils/client';
+import { client } from '../libs/client';
 import { GetStaticProps, NextPage } from 'next';
 import { MicroCMSListResponse } from 'microcms-js-sdk';
 import { Blog } from '../pages';
