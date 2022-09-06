@@ -9,7 +9,7 @@ import { githubList } from "../components/gitHubList";
 import { Container, createStyles, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import Twitter from "../components/twitterComponent";
 import { twitterList } from "../components/twitterList";
-import { client } from '../libs/client'
+import { client } from '../libs/cmsClient'
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import Link from "next/link";
 import dayjs from 'dayjs'

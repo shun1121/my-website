@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, createStyles, Text, Title } from '@mantine/core';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { client } from '../../libs/client';
+import { client } from '../../libs/cmsClient';
 import { Blog } from '..';
 import { MicroCMSContentId, MicroCMSDate } from 'microcms-js-sdk';
 import dayjs from 'dayjs'
