@@ -16,6 +16,7 @@ import dayjs from 'dayjs'
 import { useMediaQuery } from "react-responsive"
 import { useEffect, useState } from "react";
 import LinkButton from "../components/button";
+import { twitterClient } from "../libs/twitter";
 
 export type Blog = {
   title: string
@@ -56,7 +57,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
+const Home: NextPage<MicroCMSListResponse<Blog>> = ({data, tweets, profile}) => {
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -65,12 +66,16 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
+  // console.log(tweets.data[0].text)
+  // console.log(profile.data.profile_image_url)
+  // console.log(profile.data.name)
+  // console.log(profile.data.username)
   
   const blog = () => {
     if (isClient) {
       if (isMobile) {
         return (
-          props.contents.slice(0, 4).map((list, index) => (
+          data.contents.slice(0, 4).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
             <a>
               <Stack key={index} className='mb-6'>
@@ -87,7 +92,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
         );
       } else if(isLaptop) {
         return (
-          props.contents.slice(0, 5).map((list, index) => (
+          data.contents.slice(0, 5).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
               <a>
                 <Stack key={index} className='mb-6'>
@@ -121,6 +126,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
       </Head>
       <Top name="私" />
       <Container>
+        {/* <div>{tweets[0].text}</div> */}
         <Title order={1} className={classes.heading}>Blog</Title>
         <div>{blog()}</div>
         <LinkButton text="View All" href="/blog" />
@@ -139,8 +145,59 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   .getList({
     endpoint: 'blogs',
   });
+
+  // const recentSearch = await twitterClient.tweets.tweetsRecentSearch({
+  //   query: '(from:Shunsuk87072477)',
+  //   expansions: ['author_id'],
+  //   // 'tweet.fields': ['created_at'],
+  //   'user.fields': ["profile_image_url"],
+  //   max_results: 10,
+  // });
+  // const username = await twitterClient.users.findUserByUsername(
+  //   //The Twitter username (handle) of the user.
+  //   "Shunsuk87072477",
+  //   {
+  //     //A comma separated list of User fields to display
+  //     "user.fields": ["profile_image_url"],
+  //   }
+  // );
+  // console.dir(username, {
+  //   depth: null,
+  // });
+
+  const usersTweets = await twitterClient.tweets.usersIdTweets(
+    //The ID of the User to list Tweets of
+    '1259118694996643840',
+    {
+      //A comma separated list of fields to expand
+      expansions: ["author_id"],
+      //A comma separated list of Tweet fields to display
+      "tweet.fields": [
+        "created_at",
+        "author_id",
+        "conversation_id",
+        "public_metrics",
+        "context_annotations",
+      ],
+      //A comma separated list of User fields to display
+      "user.fields": [
+        "username",
+        "profile_image_url"
+      ],
+      //The maximum number of results
+      max_results: 5,
+    }
+  );
+  console.dir(usersTweets, {
+    depth: null,
+  });
+
+
   return {
-    props: data,
+    props: {
+      data: data,
+      tweets: usersTweets,
+    }
   }
 }
 
