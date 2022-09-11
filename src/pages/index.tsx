@@ -14,7 +14,7 @@ import { MicroCMSListResponse } from "microcms-js-sdk";
 import Link from "next/link";
 import dayjs from 'dayjs'
 import { useMediaQuery } from "react-responsive"
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import LinkButton from "../components/button";
 import { twitterClient } from "../libs/twitter";
 
@@ -23,7 +23,72 @@ export type Blog = {
   body: string
 }
 
-type Props = MicroCMSListResponse<Blog>
+export type Data = {
+  contents: {
+    body: string
+    createdAt: string
+    id: string
+    publishedAt: string
+    revisedAt: string
+    title: string
+    updatedAt: string
+  }[]
+  limit: number
+  offset: number
+  totalCount: number
+}
+
+export type User = {
+  users: {
+    id: string
+    name: string
+    profile_image_url: string
+    username: string
+  }[]
+}
+
+export type Tweets = {
+  data: {
+    author_id: string
+    context_annotations?: {
+      domain: {
+        description: string
+        id: string
+        name: string
+      }
+      entry: {
+        id: string
+        name: string
+      }
+    }[]
+    conversation_id: string
+    created_at: string
+    id: string
+    public_metrics: {
+      retweet_count: number
+      reply_count: number
+      like_count: number
+      quote_count: number
+    }
+    text: string
+  }
+  includes: User
+  meta: {
+    newest_id: string
+    next_token: string
+    oldest_id: string
+    result_count: number
+  }
+}
+
+type Props = {
+  data: BlogData
+  tweets: Tweets
+}
+// type Props1 = MicroCMSListResponse<Blog | User | Tweets | Data>
+type BlogData = MicroCMSListResponse<Blog>
+
+// type Prop = Props1 | Tweets
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -57,7 +122,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Home: NextPage<MicroCMSListResponse<Blog>> = ({data, tweets, profile}) => {
+const Home: NextPage<Props> = (props) => {
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -66,7 +131,14 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = ({data, tweets, profile}) => 
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
-  // console.log(tweets.data[0].text)
+  console.log(props)
+  console.log(props)
+  console.log(props.data.contents)
+  console.log(props.tweets.includes)
+  // console.log(props.data)
+  // console.log(props.tweets.includes.users)
+  // console.log(props.tweets.data)
+
   // console.log(profile.data.profile_image_url)
   // console.log(profile.data.name)
   // console.log(profile.data.username)
@@ -75,7 +147,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = ({data, tweets, profile}) => 
     if (isClient) {
       if (isMobile) {
         return (
-          data.contents.slice(0, 4).map((list, index) => (
+          props.data.contents.slice(0, 4).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
             <a>
               <Stack key={index} className='mb-6'>
@@ -92,7 +164,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = ({data, tweets, profile}) => 
         );
       } else if(isLaptop) {
         return (
-          data.contents.slice(0, 5).map((list, index) => (
+          props.data.contents.slice(0, 5).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
               <a>
                 <Stack key={index} className='mb-6'>
@@ -139,8 +211,8 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = ({data, tweets, profile}) => 
     </div>
   );
 };
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
+//ここのエラー修正から
+export const getStaticProps: GetStaticProps = async () => {
   const data = await client
   .getList({
     endpoint: 'blogs',
