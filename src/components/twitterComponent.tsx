@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import LinkButton from './button';
+import { Tweets, User } from '../pages';
 
-type Twitter = {
-  twitter: {
-    name: string
-    tweet: string
-  }[]
-}
+// type Twitter = {
+//   twitter: {
+//     name: string
+//     tweet: string
+//   }[]
+// }
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -23,14 +24,16 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Twitter: FC<Twitter> = ({twitter}) => {
+const Twitter: FC<{twitter: Tweets}> = ({twitter}) => {
   const { classes } = useStyles();
+  console.log("AAAAAAAAAAAAAAAAA")
+  console.log(twitter)
 
   return (
     // <div>
       <Container className='w-1/2'>
       <Title order={1} className={classes.heading}>Twitter</Title>
-      {twitter.map((list, index) => (
+      {/* {twitter.map((list, index) => (
         // <Link key={index} href={`/blog/${index}`} passHref>
         //   <a>
             <Stack key={index} className='mb-6'>
@@ -39,7 +42,7 @@ const Twitter: FC<Twitter> = ({twitter}) => {
             </Stack>
         //   </a>
         // </Link>
-      ))}
+      ))} */}
       <LinkButton text="View on Twitter" href="/" />
     </Container>
     // </div>

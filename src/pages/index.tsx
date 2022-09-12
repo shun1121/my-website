@@ -79,16 +79,14 @@ export type Tweets = {
     oldest_id: string
     result_count: number
   }
-}
+}[]
 
 type Props = {
-  data: BlogData
+  // data: BlogData
   tweets: Tweets
 }
-// type Props1 = MicroCMSListResponse<Blog | User | Tweets | Data>
-type BlogData = MicroCMSListResponse<Blog>
 
-// type Prop = Props1 | Tweets
+type BlogData = MicroCMSListResponse<Blog>
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -122,7 +120,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Home: NextPage<Props> = (props) => {
+// const Home: NextPage<BlogData> = (props) => {
+  const Home: FC<Props> = (props) => {
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -132,16 +131,9 @@ const Home: NextPage<Props> = (props) => {
     query: '(min-width: 401px)'
   })
   console.log(props)
-  console.log(props)
-  console.log(props.data.contents)
+  // console.log(props)
+  // console.log(props.data.contents)
   console.log(props.tweets.includes)
-  // console.log(props.data)
-  // console.log(props.tweets.includes.users)
-  // console.log(props.tweets.data)
-
-  // console.log(profile.data.profile_image_url)
-  // console.log(profile.data.name)
-  // console.log(profile.data.username)
   
   const blog = () => {
     if (isClient) {
@@ -198,7 +190,7 @@ const Home: NextPage<Props> = (props) => {
       </Head>
       <Top name="私" />
       <Container>
-        {/* <div>{tweets[0].text}</div> */}
+        <div>{props.tweets.includes.users[0].id}</div>
         <Title order={1} className={classes.heading}>Blog</Title>
         <div>{blog()}</div>
         <LinkButton text="View All" href="/blog" />
@@ -206,36 +198,16 @@ const Home: NextPage<Props> = (props) => {
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-        <Twitter twitter={twitterList} />
+        <Twitter twitter={props.tweets} />
       </SimpleGrid>
     </div>
   );
 };
-//ここのエラー修正から
 export const getStaticProps: GetStaticProps = async () => {
   const data = await client
-  .getList({
+  .getList<Blog>({
     endpoint: 'blogs',
   });
-
-  // const recentSearch = await twitterClient.tweets.tweetsRecentSearch({
-  //   query: '(from:Shunsuk87072477)',
-  //   expansions: ['author_id'],
-  //   // 'tweet.fields': ['created_at'],
-  //   'user.fields': ["profile_image_url"],
-  //   max_results: 10,
-  // });
-  // const username = await twitterClient.users.findUserByUsername(
-  //   //The Twitter username (handle) of the user.
-  //   "Shunsuk87072477",
-  //   {
-  //     //A comma separated list of User fields to display
-  //     "user.fields": ["profile_image_url"],
-  //   }
-  // );
-  // console.dir(username, {
-  //   depth: null,
-  // });
 
   const usersTweets = await twitterClient.tweets.usersIdTweets(
     //The ID of the User to list Tweets of
