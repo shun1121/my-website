@@ -131,10 +131,10 @@ const useStyles = createStyles((theme) => ({
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
-  console.log(props)
+  // console.log(props)
   // console.log(props)
   // console.log(props.data.contents)
-  console.log(props.tweets.includes)
+  // console.log(props.tweets.includes)
   
   const blog = () => {
     if (isClient) {
