@@ -16,7 +16,13 @@ import dayjs from 'dayjs'
 import { useMediaQuery } from "react-responsive"
 import { FC, useEffect, useState } from "react";
 import LinkButton from "../components/button";
-import { twitterClient } from "../libs/twitter";
+// import { twitterClient } from "../libs/twitter";
+import useSWR from "swr"
+import type {
+  findUserByUsername,
+  TwitterResponse,
+  usersIdTweets,
+} from "twitter-api-sdk/dist/types";
 
 export type Blog = {
   title: string
@@ -121,6 +127,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 // const Home: NextPage<BlogData> = (props) => {
   const Home: FC<Props> = (props) => {
   const [isClient, setIsClient] = useState(false);
@@ -131,6 +139,8 @@ const useStyles = createStyles((theme) => ({
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
+  const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
+  console.log(data)
   // console.log(props)
   // console.log(props)
   // console.log(props.data.contents)
@@ -182,6 +192,12 @@ const useStyles = createStyles((theme) => ({
     setIsClient(true);
   }, []);
 
+  if (error) {
+    return (
+      <Text>エラー</Text>
+    );
+  }
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -199,7 +215,8 @@ const useStyles = createStyles((theme) => ({
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-        <Twitter twitter={props.tweets} />
+        {data && (<Twitter twitter={data} />)}
+        {/* <Twitter twitter={data} /> */}
       </SimpleGrid>
     </div>
   );
@@ -210,38 +227,37 @@ export const getStaticProps: GetStaticProps = async () => {
     endpoint: 'blogs',
   });
 
-  const usersTweets = await twitterClient.tweets.usersIdTweets(
-    //The ID of the User to list Tweets of
-    process.env.USER_ID,
-    {
-      //A comma separated list of fields to expand
-      expansions: ["author_id"],
-      //A comma separated list of Tweet fields to display
-      "tweet.fields": [
-        "created_at",
-        "author_id",
-        "conversation_id",
-        "public_metrics",
-        "context_annotations",
-      ],
-      //A comma separated list of User fields to display
-      "user.fields": [
-        "username",
-        "profile_image_url"
-      ],
-      //The maximum number of results
-      max_results: 5,
-    }
-  );
+  // const usersTweets = await twitterClient.tweets.usersIdTweets(
+  //   //The ID of the User to list Tweets of
+  //   process.env.USER_ID,
+  //   {
+  //     //A comma separated list of fields to expand
+  //     expansions: ["author_id"],
+  //     //A comma separated list of Tweet fields to display
+  //     "tweet.fields": [
+  //       "created_at",
+  //       "author_id",
+  //       "conversation_id",
+  //       "public_metrics",
+  //       "context_annotations",
+  //     ],
+  //     //A comma separated list of User fields to display
+  //     "user.fields": [
+  //       "username",
+  //       "profile_image_url"
+  //     ],
+  //     //The maximum number of results
+  //     max_results: 5,
+  //   }
+  // );
   // console.dir(usersTweets, {
   //   depth: null,
   // });
 
-
   return {
     props: {
       data: data,
-      tweets: usersTweets,
+      // tweets: usersTweets,
     }
   }
 }

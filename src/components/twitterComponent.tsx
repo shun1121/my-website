@@ -26,7 +26,7 @@ const useStyles = createStyles((theme) => ({
 
 const Twitter: FC<{twitter: Tweets}> = ({twitter}) => {
   const { classes } = useStyles();
-  console.log("AAAAAAAAAAAAAAAAA")
+  console.log("AAAAAAAA")
   console.log(twitter)
 
   return (

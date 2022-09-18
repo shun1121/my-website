@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Client } from 'twitter-api-sdk';
+// import { Client } from 'twitter-api-sdk';
 
-export const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as string);
+// export const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as string);
 
 // export default async function getTweet(
 //   req: NextApiRequest,
@@ -11,22 +11,46 @@ export const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as stri
 //     // Pass auth credentials to the library client
 //     const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as string);
 
-//     const recentSearch = await twitterClient.tweets.tweetsRecentSearch({
-//       //One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length
-//       query: '(from:Shunsuk87072477)',
+//     // const recentSearch = await twitterClient.tweets.tweetsRecentSearch({
+//     //   //One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length
+//     //   query: '(from:Shunsuk87072477)',
 
-//       //A comma separated list of fields to expand.
-//       expansions: ['author_id'],
+//     //   //A comma separated list of fields to expand.
+//     //   expansions: ['author_id'],
 
-//       //A comma separated list of User fields to display.
-//       'tweet.fields': ['created_at'],
+//     //   //A comma separated list of User fields to display.
+//     //   'tweet.fields': ['created_at'],
 
-//       //The maximum number of results
-//       max_results: 10,
-//     });
+//     //   //The maximum number of results
+//     //   max_results: 10,
+//     // });
 
-//     console.log(recentSearch)
-//     res.status(200).json(recentSearch);
+//     const usersTweets = await twitterClient.tweets.usersIdTweets(
+//       //The ID of the User to list Tweets of
+//       process.env.USER_ID,
+//       {
+//         //A comma separated list of fields to expand
+//         expansions: ["author_id"],
+//         //A comma separated list of Tweet fields to display
+//         "tweet.fields": [
+//           "created_at",
+//           "author_id",
+//           "conversation_id",
+//           "public_metrics",
+//           "context_annotations",
+//         ],
+//         //A comma separated list of User fields to display
+//         "user.fields": [
+//           "username",
+//           "profile_image_url"
+//         ],
+//         //The maximum number of results
+//         max_results: 5,
+//       }
+//     );
+
+//     console.log(usersTweets)
+//     res.status(200).json(usersTweets);
 //   } catch (err) {
 //     console.log(err);
 //     console.error(err);
