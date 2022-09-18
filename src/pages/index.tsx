@@ -39,6 +39,7 @@ export type Data = {
 }
 
 export type User = {
+  // ここusers入れやんとUsersではいけやん？
   users: {
     id: string
     name: string
@@ -71,7 +72,7 @@ export type Tweets = {
       quote_count: number
     }
     text: string
-  }
+  }[],
   includes: User
   meta: {
     newest_id: string
@@ -79,10 +80,10 @@ export type Tweets = {
     oldest_id: string
     result_count: number
   }
-}[]
+}
 
 type Props = {
-  // data: BlogData
+  data: BlogData
   tweets: Tweets
 }
 
@@ -211,7 +212,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const usersTweets = await twitterClient.tweets.usersIdTweets(
     //The ID of the User to list Tweets of
-    '1259118694996643840',
+    process.env.USER_ID,
     {
       //A comma separated list of fields to expand
       expansions: ["author_id"],

@@ -48,7 +48,7 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
   return (
     <Container>
       <Title order={1} className={classes.heading}>Blog</Title>
-      {blogList.map((list, index) => (
+      {/* {blogList.map((list, index) => (
         <Link key={index} href={`/blog/${list.id}`} passHref>
           <a>
             <Stack key={index} className='mb-6'>
@@ -61,19 +61,19 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
             </Stack>
           </a>
         </Link>
-      ))}
+      ))} */}
       <LinkButton text="View All" href="/blog" />
     </Container>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await client
-  .getList({
-    endpoint: 'blogs',
-  });
+  // const data = await client
+  // .getList({
+  //   endpoint: 'blogs',
+  // });
   return {
-    props: data,
+    props: {},
     // props: data.contents これだとエラーが出る。
   }
 }

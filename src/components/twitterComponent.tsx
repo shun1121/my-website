@@ -33,16 +33,16 @@ const Twitter: FC<{twitter: Tweets}> = ({twitter}) => {
     // <div>
       <Container className='w-1/2'>
       <Title order={1} className={classes.heading}>Twitter</Title>
-      {/* {twitter.map((list, index) => (
+      {twitter.data.map((list, index) => (
         // <Link key={index} href={`/blog/${index}`} passHref>
         //   <a>
             <Stack key={index} className='mb-6'>
-              <Text className='font-bold text-lg'>{list.name}</Text>
-              <Text>{list.tweet}</Text>
+              <Text className='font-bold text-lg'>{twitter.includes.users[0].username}</Text>
+              <Text>{list.text}</Text>
             </Stack>
         //   </a>
         // </Link>
-      ))} */}
+      ))}
       <LinkButton text="View on Twitter" href="/" />
     </Container>
     // </div>
