@@ -199,7 +199,7 @@ const useStyles = createStyles((theme) => ({
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-        {/* <Twitter twitter={props.tweets} /> */}
+        <Twitter twitter={props.tweets} />
       </SimpleGrid>
     </div>
   );
