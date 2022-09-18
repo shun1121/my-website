@@ -210,29 +210,29 @@ export const getStaticProps: GetStaticProps = async () => {
     endpoint: 'blogs',
   });
 
-  // const usersTweets = await twitterClient.tweets.usersIdTweets(
-  //   //The ID of the User to list Tweets of
-  //   process.env.USER_ID,
-  //   {
-  //     //A comma separated list of fields to expand
-  //     expansions: ["author_id"],
-  //     //A comma separated list of Tweet fields to display
-  //     "tweet.fields": [
-  //       "created_at",
-  //       "author_id",
-  //       "conversation_id",
-  //       "public_metrics",
-  //       "context_annotations",
-  //     ],
-  //     //A comma separated list of User fields to display
-  //     "user.fields": [
-  //       "username",
-  //       "profile_image_url"
-  //     ],
-  //     //The maximum number of results
-  //     max_results: 5,
-  //   }
-  // );
+  const usersTweets = await twitterClient.tweets.usersIdTweets(
+    //The ID of the User to list Tweets of
+    process.env.USER_ID,
+    {
+      //A comma separated list of fields to expand
+      expansions: ["author_id"],
+      //A comma separated list of Tweet fields to display
+      "tweet.fields": [
+        "created_at",
+        "author_id",
+        "conversation_id",
+        "public_metrics",
+        "context_annotations",
+      ],
+      //A comma separated list of User fields to display
+      "user.fields": [
+        "username",
+        "profile_image_url"
+      ],
+      //The maximum number of results
+      max_results: 5,
+    }
+  );
   // console.dir(usersTweets, {
   //   depth: null,
   // });
@@ -241,7 +241,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       data: data,
-      // tweets: usersTweets,
+      tweets: usersTweets,
     }
   }
 }
