@@ -193,7 +193,7 @@ const useStyles = createStyles((theme) => ({
       <Container>
         <div>{props.tweets.includes.users[0].id}</div>
         <Title order={1} className={classes.heading}>Blog</Title>
-        <div>{blog()}</div>
+        {/* <div>{blog()}</div> */}
         <LinkButton text="View All" href="/blog" />
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
