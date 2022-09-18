@@ -39,6 +39,7 @@ export type Data = {
 }
 
 export type User = {
+  // ここusers入れやんとUsersではいけやん？
   users: {
     id: string
     name: string
@@ -82,7 +83,7 @@ export type Tweets = {
 }
 
 type Props = {
-  // data: BlogData
+  data: BlogData
   tweets: Tweets
 }
 
@@ -135,47 +136,47 @@ const useStyles = createStyles((theme) => ({
   // console.log(props.data.contents)
   console.log(props.tweets.includes)
   
-  // const blog = () => {
-  //   if (isClient) {
-  //     if (isMobile) {
-  //       return (
-  //         props.data.contents.slice(0, 4).map((list, index) => (
-  //           <Link key={index} href={`/blog/${list.id}`} passHref>
-  //           <a>
-  //             <Stack key={index} className='mb-6'>
-  //               <Title order={2}>{list.title}</Title>
-  //               <Text
-  //                 dangerouslySetInnerHTML={{
-  //                   __html: list.body
-  //                 }} />
-  //               {dayjs(list.createdAt).format('YYYY年MM月DD日')}
-  //             </Stack>
-  //           </a>
-  //         </Link>
-  //         ))
-  //       );
-  //     } else if(isLaptop) {
-  //       return (
-  //         props.data.contents.slice(0, 5).map((list, index) => (
-  //           <Link key={index} href={`/blog/${list.id}`} passHref>
-  //             <a>
-  //               <Stack key={index} className='mb-6'>
-  //                 <Title order={2}>{list.title}</Title>
-  //                 <Text
-  //                   dangerouslySetInnerHTML={{
-  //                     __html: list.body
-  //                   }} />
-  //                 {dayjs(list.createdAt).format('YYYY年MM月DD日')}
-  //               </Stack>
-  //             </a>
-  //           </Link>
-  //         ))
-  //       )
-  //     }
-  //   } else {
-  //     return <></>;
-  //   }
-  // };
+  const blog = () => {
+    if (isClient) {
+      if (isMobile) {
+        return (
+          props.data.contents.slice(0, 4).map((list, index) => (
+            <Link key={index} href={`/blog/${list.id}`} passHref>
+            <a>
+              <Stack key={index} className='mb-6'>
+                <Title order={2}>{list.title}</Title>
+                <Text
+                  dangerouslySetInnerHTML={{
+                    __html: list.body
+                  }} />
+                {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+              </Stack>
+            </a>
+          </Link>
+          ))
+        );
+      } else if(isLaptop) {
+        return (
+          props.data.contents.slice(0, 5).map((list, index) => (
+            <Link key={index} href={`/blog/${list.id}`} passHref>
+              <a>
+                <Stack key={index} className='mb-6'>
+                  <Title order={2}>{list.title}</Title>
+                  <Text
+                    dangerouslySetInnerHTML={{
+                      __html: list.body
+                    }} />
+                  {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+                </Stack>
+              </a>
+            </Link>
+          ))
+        )
+      }
+    } else {
+      return <></>;
+    }
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -190,57 +191,57 @@ const useStyles = createStyles((theme) => ({
       </Head>
       <Top name="私" />
       <Container>
-        <div>{props.tweets.includes.users[0].id}</div>
+        {/* <div>{props.tweets.includes.users[0].id}</div> */}
         <Title order={1} className={classes.heading}>Blog</Title>
-        {/* <div>{blog()}</div> */}
+        <div>{blog()}</div>
         <LinkButton text="View All" href="/blog" />
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-        <Twitter twitter={props.tweets} />
+        {/* <Twitter twitter={props.tweets} /> */}
       </SimpleGrid>
     </div>
   );
 };
 export const getStaticProps: GetStaticProps = async () => {
-  // const data = await client
-  // .getList<Blog>({
-  //   endpoint: 'blogs',
-  // });
-
-  const usersTweets = await twitterClient.tweets.usersIdTweets(
-    //The ID of the User to list Tweets of
-    '1259118694996643840',
-    {
-      //A comma separated list of fields to expand
-      expansions: ["author_id"],
-      //A comma separated list of Tweet fields to display
-      "tweet.fields": [
-        "created_at",
-        "author_id",
-        "conversation_id",
-        "public_metrics",
-        "context_annotations",
-      ],
-      //A comma separated list of User fields to display
-      "user.fields": [
-        "username",
-        "profile_image_url"
-      ],
-      //The maximum number of results
-      max_results: 5,
-    }
-  );
-  console.dir(usersTweets, {
-    depth: null,
+  const data = await client
+  .getList<Blog>({
+    endpoint: 'blogs',
   });
+
+  // const usersTweets = await twitterClient.tweets.usersIdTweets(
+  //   //The ID of the User to list Tweets of
+  //   process.env.USER_ID,
+  //   {
+  //     //A comma separated list of fields to expand
+  //     expansions: ["author_id"],
+  //     //A comma separated list of Tweet fields to display
+  //     "tweet.fields": [
+  //       "created_at",
+  //       "author_id",
+  //       "conversation_id",
+  //       "public_metrics",
+  //       "context_annotations",
+  //     ],
+  //     //A comma separated list of User fields to display
+  //     "user.fields": [
+  //       "username",
+  //       "profile_image_url"
+  //     ],
+  //     //The maximum number of results
+  //     max_results: 5,
+  //   }
+  // );
+  // console.dir(usersTweets, {
+  //   depth: null,
+  // });
 
 
   return {
     props: {
-      data: {},
-      tweets: usersTweets,
+      data: data,
+      // tweets: usersTweets,
     }
   }
 }
