@@ -11,20 +11,6 @@ export default async function getTweet(
     // Pass auth credentials to the library client
     const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as string);
 
-    // const recentSearch = await twitterClient.tweets.tweetsRecentSearch({
-    //   //One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length
-    //   query: '(from:Shunsuk87072477)',
-
-    //   //A comma separated list of fields to expand.
-    //   expansions: ['author_id'],
-
-    //   //A comma separated list of User fields to display.
-    //   'tweet.fields': ['created_at'],
-
-    //   //The maximum number of results
-    //   max_results: 10,
-    // });
-
     const usersTweets = await twitterClient.tweets.usersIdTweets(
       //The ID of the User to list Tweets of
       process.env.USER_ID,
@@ -49,7 +35,6 @@ export default async function getTweet(
       }
     );
 
-    console.log(usersTweets)
     res.status(200).json(usersTweets);
   } catch (err) {
     console.log(err);

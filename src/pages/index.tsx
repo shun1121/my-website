@@ -130,6 +130,7 @@ const useStyles = createStyles((theme) => ({
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
   const Home: FC<Props> = (props) => {
+    const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -138,7 +139,6 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
-  const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
   console.log(data)
   
   const blog = () => {
