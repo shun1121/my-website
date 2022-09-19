@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetStaticProps } from "next";
 import Head from "next/head";
 import styles from "../../src/styles/Home.module.css";
 import Top from "../components/top";
@@ -8,7 +8,6 @@ import Github from "../components/githubComponent";
 import { githubList } from "../components/gitHubList";
 import { Container, createStyles, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import Twitter from "../components/twitterComponent";
-import { twitterList } from "../components/twitterList";
 import { client } from '../libs/cmsClient'
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import Link from "next/link";
@@ -16,13 +15,6 @@ import dayjs from 'dayjs'
 import { useMediaQuery } from "react-responsive"
 import { FC, useEffect, useState } from "react";
 import LinkButton from "../components/button";
-// import { twitterClient } from "../libs/twitter";
-import useSWR from "swr"
-import type {
-  findUserByUsername,
-  TwitterResponse,
-  usersIdTweets,
-} from "twitter-api-sdk/dist/types";
 
 export type Blog = {
   title: string
@@ -45,7 +37,6 @@ export type Data = {
 }
 
 export type User = {
-  // ここusers入れやんとUsersではいけやん？
   users: {
     id: string
     name: string
@@ -127,10 +118,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
   const Home: FC<Props> = (props) => {
-    const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -139,7 +127,6 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
-  console.log(data)
   
   const blog = () => {
     if (isClient) {
@@ -209,7 +196,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-        {data && (<Twitter twitter={data} />)}
+        <Twitter />
       </SimpleGrid>
     </div>
   );

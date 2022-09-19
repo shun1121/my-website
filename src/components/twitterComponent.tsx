@@ -9,6 +9,7 @@ import {
 import LinkButton from "./button";
 import { Tweets } from "../pages";
 import dayjs from "dayjs";
+import useSWR from "swr"
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -27,28 +28,33 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+// const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
+const Twitter: FC = () => {
+  const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
   const { classes } = useStyles();
+  console.log(data)
 
   return (
     <Container className="max-w-[598px]">
       <Title order={1} className={classes.heading}>
         Twitter
       </Title>
-      {twitter.data.map((list, index) => (
-        <a key={index} className="mb-10 flex" href={`https://twitter.com/${twitter.includes.users[0].username}/status/${twitter.data[index].id}`} >
+      {data?.data.map((list, index) => (
+        <a key={index} className="mb-10 flex" href={`https://twitter.com/${data?.includes.users[0].username}/status/${data?.data[index].id}`} >
             <Avatar
-              src={twitter.includes.users[0].profile_image_url}
-              alt={twitter.includes.users[0].name}
+              src={data.includes.users[0].profile_image_url}
+              alt={data.includes.users[0].name}
               className="rounded-full"
             />
             <div className="ml-3">
               <div className="flex">
                 <Text className="font-bold text-[16px]">
-                  {twitter.includes.users[0].name}
+                  {data.includes.users[0].name}
                 </Text>
                 <Text className="text-[#909296] text-[12px] font-bold ml-2">
-                  @{twitter.includes.users[0].username}
+                  @{data.includes.users[0].username}
                 </Text>
                 <Text className="text-[#909296] text-[12px] font-bold ml-2">
                   {dayjs(list.created_at).format("M月D日")}
@@ -60,7 +66,7 @@ const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
       ))}
       <LinkButton
         text="View on Twitter"
-        href={`https://twitter.com/${twitter.includes.users[0].username}`}
+        href={`https://twitter.com/${data?.includes.users[0].username}`}
       />
     </Container>
   );
