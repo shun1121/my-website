@@ -41,6 +41,8 @@ const Twitter: FC = () => {
       <Title order={1} className={classes.heading}>
         Twitter
       </Title>
+      {error && (<div>failed to load</div>)}
+      {!data && (<div>loading...</div>)}
       {data?.data.map((list, index) => (
         <a key={index} className="mb-10 flex" href={`https://twitter.com/${data?.includes.users[0].username}/status/${data?.data[index].id}`} >
             <Avatar
