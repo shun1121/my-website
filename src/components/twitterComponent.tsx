@@ -42,7 +42,7 @@ const Twitter: FC = () => {
       </Title>
       {error && (<div>failed to load</div>)}
       {!data && (<div>loading...</div>)}
-      {data?.data.map((list, index) => (
+      {data?.data.slice(0,3).map((list, index) => (
         <a key={index} className="mb-10 flex" href={`https://twitter.com/${data?.includes.users[0].username}/status/${data?.data[index].id}`} >
             <Avatar
               src={data.includes.users[0].profile_image_url}
