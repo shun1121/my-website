@@ -14,15 +14,86 @@ import { MicroCMSListResponse } from "microcms-js-sdk";
 import Link from "next/link";
 import dayjs from 'dayjs'
 import { useMediaQuery } from "react-responsive"
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import LinkButton from "../components/button";
+// import { twitterClient } from "../libs/twitter";
+import useSWR from "swr"
+import type {
+  findUserByUsername,
+  TwitterResponse,
+  usersIdTweets,
+} from "twitter-api-sdk/dist/types";
 
 export type Blog = {
   title: string
   body: string
 }
 
-type Props = MicroCMSListResponse<Blog>
+export type Data = {
+  contents: {
+    body: string
+    createdAt: string
+    id: string
+    publishedAt: string
+    revisedAt: string
+    title: string
+    updatedAt: string
+  }[]
+  limit: number
+  offset: number
+  totalCount: number
+}
+
+export type User = {
+  // ここusers入れやんとUsersではいけやん？
+  users: {
+    id: string
+    name: string
+    profile_image_url: string
+    username: string
+  }[]
+}
+
+export type Tweets = {
+  data: {
+    author_id: string
+    context_annotations?: {
+      domain: {
+        description: string
+        id: string
+        name: string
+      }
+      entry: {
+        id: string
+        name: string
+      }
+    }[]
+    conversation_id: string
+    created_at: string
+    id: string
+    public_metrics: {
+      retweet_count: number
+      reply_count: number
+      like_count: number
+      quote_count: number
+    }
+    text: string
+  }[],
+  includes: User
+  meta: {
+    newest_id: string
+    next_token: string
+    oldest_id: string
+    result_count: number
+  }
+}
+
+type Props = {
+  blogData: BlogData
+  tweets: Tweets
+}
+
+type BlogData = MicroCMSListResponse<Blog>
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -56,7 +127,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const Home: FC<Props> = (props) => {
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -65,12 +138,14 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
   const isLaptop = useMediaQuery({
     query: '(min-width: 401px)'
   })
+  const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
+  console.log(data)
   
   const blog = () => {
     if (isClient) {
       if (isMobile) {
         return (
-          props.contents.slice(0, 4).map((list, index) => (
+          props.blogData.contents.slice(0, 4).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
             <a>
               <Stack key={index} className='mb-6'>
@@ -87,7 +162,7 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
         );
       } else if(isLaptop) {
         return (
-          props.contents.slice(0, 5).map((list, index) => (
+          props.blogData.contents.slice(0, 5).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
               <a>
                 <Stack key={index} className='mb-6'>
@@ -112,6 +187,12 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
     setIsClient(true);
   }, []);
 
+  // if (error) {
+  //   return (
+  //     <Text>エラー</Text>
+  //   );
+  // }
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -128,19 +209,21 @@ const Home: NextPage<MicroCMSListResponse<Blog>> = (props) => {
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
-        <Twitter twitter={twitterList} />
+        {data && (<Twitter twitter={data} />)}
       </SimpleGrid>
     </div>
   );
 };
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const data = await client
-  .getList({
+export const getStaticProps: GetStaticProps = async () => {
+  const blogData = await client
+  .getList<Blog>({
     endpoint: 'blogs',
   });
+
   return {
-    props: data,
+    props: {
+      blogData: blogData,
+    }
   }
 }
 

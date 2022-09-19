@@ -31,7 +31,7 @@ const Top: FC<Name> = ({ name }) => {
     <div className='bg-pink-500 h-64'>
       <Container className='h-64 w-full md:flex md:justify-between'>
         <Stack className={classes.title}>
-          <Title order={1} className='text-white' >Shimabu IT University</Title>
+          <Title order={1} className='text-white' >自分のサイトまとめ</Title>
           <Text className='text-white'>{name}のポートフォリオのためのページです。</Text>
         </Stack>
         <Group className={classes.snsIcons} >

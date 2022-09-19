@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
 import { client } from '../libs/cmsClient';
@@ -40,9 +40,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
+const Blog: FC<{blogData: MicroCMSListResponse<Blog>}> = ({ blogData }) => {
   const { classes } = useStyles();
-  const blogList = props.contents
+  const blogList = blogData.contents
   // const blogList = props　これだとエラーが出る。
 
   return (
@@ -68,12 +68,14 @@ const Blog: NextPage<MicroCMSListResponse<Blog>> = (props) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await client
-  .getList({
+  const blogData = await client
+  .getList<Blog>({
     endpoint: 'blogs',
   });
   return {
-    props: data,
+    props: {
+      blogData: blogData
+    },
     // props: data.contents これだとエラーが出る。
   }
 }
