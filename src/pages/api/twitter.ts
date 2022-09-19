@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from 'twitter-api-sdk';
 
-export const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as string);
+// export const twitterClient = new Client(process.env.TWITTER_BEARER_TOKEN as string);
 
 export default async function getTweet(
   req: NextApiRequest,
