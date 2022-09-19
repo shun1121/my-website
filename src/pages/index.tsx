@@ -187,11 +187,11 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
     setIsClient(true);
   }, []);
 
-  if (error) {
-    return (
-      <Text>エラー</Text>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <Text>エラー</Text>
+  //   );
+  // }
   
   return (
     <div className={styles.container}>
