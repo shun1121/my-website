@@ -89,7 +89,7 @@ export type Tweets = {
 }
 
 type Props = {
-  data: BlogData
+  blogData: BlogData
   tweets: Tweets
 }
 
@@ -129,7 +129,6 @@ const useStyles = createStyles((theme) => ({
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-// const Home: NextPage<BlogData> = (props) => {
   const Home: FC<Props> = (props) => {
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
@@ -141,16 +140,12 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
   })
   const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
   console.log(data)
-  // console.log(props)
-  // console.log(props)
-  // console.log(props.data.contents)
-  // console.log(props.tweets.includes)
   
   const blog = () => {
     if (isClient) {
       if (isMobile) {
         return (
-          props.data.contents.slice(0, 4).map((list, index) => (
+          props.blogData.contents.slice(0, 4).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
             <a>
               <Stack key={index} className='mb-6'>
@@ -167,7 +162,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
         );
       } else if(isLaptop) {
         return (
-          props.data.contents.slice(0, 5).map((list, index) => (
+          props.blogData.contents.slice(0, 5).map((list, index) => (
             <Link key={index} href={`/blog/${list.id}`} passHref>
               <a>
                 <Stack key={index} className='mb-6'>
@@ -207,7 +202,6 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
       </Head>
       <Top name="私" />
       <Container>
-        {/* <div>{props.tweets.includes.users[0].id}</div> */}
         <Title order={1} className={classes.heading}>Blog</Title>
         <div>{blog()}</div>
         <LinkButton text="View All" href="/blog" />
@@ -216,48 +210,19 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
       <SimpleGrid cols={2} spacing="xs" >
         <Github github={githubList} />
         {data && (<Twitter twitter={data} />)}
-        {/* <Twitter twitter={data} /> */}
       </SimpleGrid>
     </div>
   );
 };
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await client
+  const blogData = await client
   .getList<Blog>({
     endpoint: 'blogs',
   });
 
-  // const usersTweets = await twitterClient.tweets.usersIdTweets(
-  //   //The ID of the User to list Tweets of
-  //   process.env.USER_ID,
-  //   {
-  //     //A comma separated list of fields to expand
-  //     expansions: ["author_id"],
-  //     //A comma separated list of Tweet fields to display
-  //     "tweet.fields": [
-  //       "created_at",
-  //       "author_id",
-  //       "conversation_id",
-  //       "public_metrics",
-  //       "context_annotations",
-  //     ],
-  //     //A comma separated list of User fields to display
-  //     "user.fields": [
-  //       "username",
-  //       "profile_image_url"
-  //     ],
-  //     //The maximum number of results
-  //     max_results: 5,
-  //   }
-  // );
-  // console.dir(usersTweets, {
-  //   depth: null,
-  // });
-
   return {
     props: {
-      data: data,
-      // tweets: usersTweets,
+      blogData: blogData,
     }
   }
 }
