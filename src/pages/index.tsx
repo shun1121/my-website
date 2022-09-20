@@ -128,47 +128,47 @@ const useStyles = createStyles((theme) => ({
     query: '(min-width: 401px)'
   })
   
-  const blog = () => {
-    if (isClient) {
-      if (isMobile) {
-        return (
-          props.blogData.contents.slice(0, 4).map((list, index) => (
-            <Link key={index} href={`/blog/${list.id}`} passHref>
-            <a>
-              <Stack key={index} className='mb-6'>
-                <Title order={2}>{list.title}</Title>
-                <Text
-                  dangerouslySetInnerHTML={{
-                    __html: list.body
-                  }} />
-                {dayjs(list.createdAt).format('YYYY年MM月DD日')}
-              </Stack>
-            </a>
-          </Link>
-          ))
-        );
-      } else if(isLaptop) {
-        return (
-          props.blogData.contents.slice(0, 5).map((list, index) => (
-            <Link key={index} href={`/blog/${list.id}`} passHref>
-              <a>
-                <Stack key={index} className='mb-6'>
-                  <Title order={2}>{list.title}</Title>
-                  <Text
-                    dangerouslySetInnerHTML={{
-                      __html: list.body
-                    }} />
-                  {dayjs(list.createdAt).format('YYYY年MM月DD日')}
-                </Stack>
-              </a>
-            </Link>
-          ))
-        )
-      }
-    } else {
-      return <></>;
-    }
-  };
+  // const blog = () => {
+  //   if (isClient) {
+  //     if (isMobile) {
+  //       return (
+  //         props.blogData.contents.slice(0, 4).map((list, index) => (
+  //           <Link key={index} href={`/blog/${list.id}`} passHref>
+  //           <a>
+  //             <Stack key={index} className='mb-6'>
+  //               <Title order={2}>{list.title}</Title>
+  //               <Text
+  //                 dangerouslySetInnerHTML={{
+  //                   __html: list.body
+  //                 }} />
+  //               {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+  //             </Stack>
+  //           </a>
+  //         </Link>
+  //         ))
+  //       );
+  //     } else if(isLaptop) {
+  //       return (
+  //         props.blogData.contents.slice(0, 5).map((list, index) => (
+  //           <Link key={index} href={`/blog/${list.id}`} passHref>
+  //             <a>
+  //               <Stack key={index} className='mb-6'>
+  //                 <Title order={2}>{list.title}</Title>
+  //                 <Text
+  //                   dangerouslySetInnerHTML={{
+  //                     __html: list.body
+  //                   }} />
+  //                 {dayjs(list.createdAt).format('YYYY年MM月DD日')}
+  //               </Stack>
+  //             </a>
+  //           </Link>
+  //         ))
+  //       )
+  //     }
+  //   } else {
+  //     return <></>;
+  //   }
+  // };
 
   useEffect(() => {
     setIsClient(true);
@@ -190,7 +190,7 @@ const useStyles = createStyles((theme) => ({
       <Top name="私" />
       <Container>
         <Title order={1} className={classes.heading}>Blog</Title>
-        <div>{blog()}</div>
+        {/* <div>{blog()}</div> */}
         <LinkButton text="View All" href="/blog" />
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
