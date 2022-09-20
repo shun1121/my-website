@@ -30,8 +30,8 @@ const useStyles = createStyles((theme) => ({
 
 
 const Twitter: FC = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error } = useSWR<Tweets>('/api/twitter', async (url) => (await fetch(url)).json());
   const { classes } = useStyles();
   console.log(data)
 
