@@ -16,8 +16,8 @@ export default async function getTweet(
           "created_at",
           "author_id",
           "conversation_id",
-          // "public_metrics",
-          // "context_annotations",
+          "public_metrics",
+          "context_annotations",
         ],
         "user.fields": [
           "username",
