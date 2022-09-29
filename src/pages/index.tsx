@@ -139,7 +139,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
     query: '(min-width: 401px)'
   })
   const { data, error } = useSWR<Tweets>('/api/twitter', fetcher);
-  console.log(data)
+  // console.log(data)
   
   const blog = () => {
     if (isClient) {
@@ -223,7 +223,8 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       blogData: blogData,
-    }
+    },
+    revalidate: 10,
   }
 }
 
