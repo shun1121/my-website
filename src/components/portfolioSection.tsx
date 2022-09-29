@@ -58,7 +58,7 @@ const PortfolioSection: FC<PortfolioSection> = ({portfolioSection}) => {
       <Grid gutter={40}>
         {portfolioSection.map((item, index) => (
           <Grid.Col key={index} sm={4}>
-            <Link href={`/blog/${index}`} passHref>
+            <Link href="/" passHref>
               <div className={classes.postsWrapper}>
                 <a>
                   <Image src={item.imgUrl} height={160} alt='cover_image' />
