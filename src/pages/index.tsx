@@ -5,7 +5,6 @@ import Top from "../components/top";
 import PortfolioSection from "../components/portfolioSection";
 import { portfolio } from "../components/portfolioList";
 import Github from "../components/githubComponent";
-import { githubList } from "../components/gitHubList";
 import {
   Container,
   createStyles,
@@ -24,6 +23,13 @@ import { useMediaQuery } from "react-responsive";
 import { FC, useEffect, useState } from "react";
 import LinkButton from "../components/button";
 import useSWR from "swr";
+import {
+  ApolloClient,
+  createHttpLink,
+  gql,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 export type Blog = {
   title: string;
@@ -91,6 +97,7 @@ export type Tweets = {
 type Props = {
   blogData: BlogData;
   tweets: Tweets;
+  githubData: any;
 };
 
 type BlogData = MicroCMSListResponse<Blog>;
@@ -141,7 +148,9 @@ const fetcher = async (url: string) =>
 
 const Home: FC<Props> = (props) => {
   const { data, error } = useSWR<Tweets>("/api/twitter", fetcher);
-  console.log(data);
+  // console.log(data);
+  const githubList = props.githubData.user.repositories.nodes;
+  // console.log(props.githubData);
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -212,7 +221,23 @@ const Home: FC<Props> = (props) => {
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs">
-        <Github github={githubList} />
+        {/* <Github github={githubList} /> */}
+        <Container className='w-1/2'>
+
+        <Title order={1} className={classes.heading}>GitHub</Title>
+          {props.githubData?.user.repositories.nodes.map((value:any, index:any) => (
+            <Github
+              key={index}
+              name={value.name}
+              description={value.description}
+              stars={value.stargazerCount}
+              forks={value.forkCount}
+              url={value.url}
+              languages={value.languages}
+            />
+          ))}
+          <LinkButton text="View on GitHub" href="/" />
+        </Container>
         {data ? (
           <Twitter twitter={data} />
         ) : error ? (
@@ -229,12 +254,75 @@ export const getStaticProps: GetStaticProps = async () => {
     endpoint: "blogs",
   });
 
+  const httpLink = createHttpLink({
+    uri: "https://api.github.com/graphql",
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+      },
+    };
+  });
+
+  const apolloClient = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+  });
+
+  const { data } = await apolloClient.query({
+    query: gql`
+      {
+        user(login: "shun1121") {
+          name
+          url
+          repositories(
+            first: 5
+            orderBy: { field: CREATED_AT, direction: ASC }
+            privacy: PUBLIC
+          ) {
+            nodes {
+              createdAt
+              description
+              forkCount
+              name
+              stargazerCount
+              url
+              languages(first: 5, orderBy: { field: SIZE, direction: ASC }) {
+                nodes {
+                  color
+                  name
+                }
+                totalCount
+                totalSize
+                edges {
+                  node {
+                    color
+                    id
+                    name
+                  }
+                  size
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  console.log(data);
+
   return {
     props: {
       blogData: blogData,
+      githubData: data,
     },
     revalidate: 60,
-  }
-}
+  };
+};
 
 export default Home;
