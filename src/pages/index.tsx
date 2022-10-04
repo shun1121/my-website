@@ -23,13 +23,9 @@ import { useMediaQuery } from "react-responsive";
 import { FC, useEffect, useState } from "react";
 import LinkButton from "../components/button";
 import useSWR from "swr";
-import {
-  ApolloClient,
-  createHttpLink,
-  gql,
-  InMemoryCache,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import { apolloClient } from "../libs/apolloClient";
+import { GithubType } from "../types/github";
+import { query } from "../libs/getGithubData";
 
 export type Blog = {
   title: string;
@@ -97,7 +93,7 @@ export type Tweets = {
 type Props = {
   blogData: BlogData;
   tweets: Tweets;
-  githubData: any;
+  githubData: GithubType;
 };
 
 type BlogData = MicroCMSListResponse<Blog>;
@@ -148,9 +144,7 @@ const fetcher = async (url: string) =>
 
 const Home: FC<Props> = (props) => {
   const { data, error } = useSWR<Tweets>("/api/twitter", fetcher);
-  // console.log(data);
-  const githubList = props.githubData.user.repositories.nodes;
-  // console.log(props.githubData);
+  console.log(props.githubData);
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -221,11 +215,9 @@ const Home: FC<Props> = (props) => {
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs">
-        {/* <Github github={githubList} /> */}
         <Container className='w-1/2'>
-
         <Title order={1} className={classes.heading}>GitHub</Title>
-          {props.githubData?.user.repositories.nodes.map((value:any, index:any) => (
+          {props.githubData?.user.repositories.nodes.map((value, index) => (
             <Github
               key={index}
               name={value.name}
@@ -254,67 +246,12 @@ export const getStaticProps: GetStaticProps = async () => {
     endpoint: "blogs",
   });
 
-  const httpLink = createHttpLink({
-    uri: "https://api.github.com/graphql",
+  const { data } = await apolloClient.query<GithubType>({ 
+    query: query,
+    variables: {
+      user_id: process.env.GITHUB_USER_ID,
+    },
   });
-
-  const authLink = setContext((_, { headers }) => {
-    // return the headers to the context so httpLink can read them
-    return {
-      headers: {
-        ...headers,
-        authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
-      },
-    };
-  });
-
-  const apolloClient = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-  });
-
-  const { data } = await apolloClient.query({
-    query: gql`
-      {
-        user(login: "shun1121") {
-          name
-          url
-          repositories(
-            first: 5
-            orderBy: { field: CREATED_AT, direction: ASC }
-            privacy: PUBLIC
-          ) {
-            nodes {
-              createdAt
-              description
-              forkCount
-              name
-              stargazerCount
-              url
-              languages(first: 5, orderBy: { field: SIZE, direction: ASC }) {
-                nodes {
-                  color
-                  name
-                }
-                totalCount
-                totalSize
-                edges {
-                  node {
-                    color
-                    id
-                    name
-                  }
-                  size
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-  });
-
-  console.log(data);
 
   return {
     props: {
