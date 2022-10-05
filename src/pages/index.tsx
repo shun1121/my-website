@@ -90,13 +90,12 @@ export type Tweets = {
   };
 };
 
-
 type BlogData = MicroCMSListResponse<Blog>;
 
 type Props = {
   blogData: BlogData;
   tweets: Tweets;
-  githubData: GithubType;
+  githubData: GithubProps[];
 };
 
 const useStyles = createStyles((theme) => ({
@@ -220,24 +219,16 @@ const Home: FC<Props> = (props) => {
           <Title order={1} className={classes.heading}>
             GitHub
           </Title>
-          {props.githubData?.user.repositories.nodes.map((repository, index) => {
-            const languages = repository.languages.edges.map((val) => {
-              console.log(repository.name)
-              return {
-                name: val.node.name,
-                color: val.node.color,
-                ratio: val.size / repository.languages.totalSize // 各言語のサイズ / リポジトリ全体の言語サイズ
-              }
-            })
+          {props.githubData.map((repository, index) => {
             return (
               <Github
                 key={index}
                 name={repository.name}
                 description={repository.description}
-                stars={repository.stargazerCount}
-                forks={repository.forkCount}
+                stars={repository.stars}
+                forks={repository.forks}
                 url={repository.url}
-                languages={languages}
+                languages={repository.languages}
               />
             );
           })}
@@ -269,17 +260,24 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       blogData: blogData,
-      githubData: data,
-      // githubData: data.user.repositories.nodes.map((repository) => {
-      // return {
-      //   name: repository.name,
-      //   description: repository.description,
-      //   stars: repository.stargazerCount,
-      //   forks: repository.forkCount,
-      //   url: repository.url,
-      //   // languages,
-      // };
-      // }),
+      githubData: data.user.repositories.nodes.map((repository) => {
+        const languages = repository.languages.edges.map((val) => {
+          console.log(repository.name);
+          return {
+            name: val.node.name,
+            color: val.node.color,
+            ratio: val.size / repository.languages.totalSize, // 各言語のサイズ / リポジトリ全体の言語サイズ
+          };
+        });
+        return {
+          name: repository.name,
+          description: repository.description,
+          stars: repository.stargazerCount,
+          forks: repository.forkCount,
+          url: repository.url,
+          languages,
+        };
+      }),
     },
     revalidate: 60,
   };

@@ -15,7 +15,7 @@ export type GithubProps = {
   forks: number;
   url: string;
   languages: Languages[];
-}[];
+};
 
 const Github: FC<GithubProps> = (props) => {
   const { name, description, stars, forks, url, languages } = props;
@@ -88,7 +88,6 @@ const LanguageLegens: FC<LanguageProps> = (props) => {
     <Group noWrap>
       {languages?.map((value, index) => (
         <Group key={index} spacing={6} noWrap>
-          {/* <DotIcon color={value.color} /> */}
           <Text size="sm" weight={700}>
             {value.name}
           </Text>
