@@ -4,7 +4,7 @@ import styles from "../../src/styles/Home.module.css";
 import Top from "../components/top";
 import PortfolioSection from "../components/portfolioSection";
 import { portfolio } from "../components/portfolioList";
-import Github from "../components/githubComponent";
+import Github, { GithubProps } from "../components/githubComponent";
 import {
   Container,
   createStyles,
@@ -90,13 +90,14 @@ export type Tweets = {
   };
 };
 
+
+type BlogData = MicroCMSListResponse<Blog>;
+
 type Props = {
   blogData: BlogData;
   tweets: Tweets;
   githubData: GithubType;
 };
-
-type BlogData = MicroCMSListResponse<Blog>;
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -215,19 +216,31 @@ const Home: FC<Props> = (props) => {
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
       <SimpleGrid cols={2} spacing="xs">
-        <Container className='w-1/2'>
-        <Title order={1} className={classes.heading}>GitHub</Title>
-          {props.githubData?.user.repositories.nodes.map((value, index) => (
-            <Github
-              key={index}
-              name={value.name}
-              description={value.description}
-              stars={value.stargazerCount}
-              forks={value.forkCount}
-              url={value.url}
-              languages={value.languages}
-            />
-          ))}
+        <Container className="">
+          <Title order={1} className={classes.heading}>
+            GitHub
+          </Title>
+          {props.githubData?.user.repositories.nodes.map((repository, index) => {
+            const languages = repository.languages.edges.map((val) => {
+              console.log(repository.name)
+              return {
+                name: val.node.name,
+                color: val.node.color,
+                ratio: val.size / repository.languages.totalSize // 各言語のサイズ / リポジトリ全体の言語サイズ
+              }
+            })
+            return (
+              <Github
+                key={index}
+                name={repository.name}
+                description={repository.description}
+                stars={repository.stargazerCount}
+                forks={repository.forkCount}
+                url={repository.url}
+                languages={languages}
+              />
+            );
+          })}
           <LinkButton text="View on GitHub" href="/" />
         </Container>
         {data ? (
@@ -246,7 +259,7 @@ export const getStaticProps: GetStaticProps = async () => {
     endpoint: "blogs",
   });
 
-  const { data } = await apolloClient.query<GithubType>({ 
+  const { data } = await apolloClient.query<GithubType>({
     query: query,
     variables: {
       user_id: process.env.GITHUB_USER_ID,
@@ -257,6 +270,16 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       blogData: blogData,
       githubData: data,
+      // githubData: data.user.repositories.nodes.map((repository) => {
+      // return {
+      //   name: repository.name,
+      //   description: repository.description,
+      //   stars: repository.stargazerCount,
+      //   forks: repository.forkCount,
+      //   url: repository.url,
+      //   // languages,
+      // };
+      // }),
     },
     revalidate: 60,
   };

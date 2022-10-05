@@ -1,46 +1,30 @@
-import React, { FC } from 'react';
-import { Box, Container, createStyles, Group, Stack, Text, Title } from '@mantine/core';
-import LinkButton from './button';
-import { Star } from 'tabler-icons-react';
+import React, { FC } from "react";
+import {
+  Box,
+  Group,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
+import { Star, GitFork } from "tabler-icons-react";
 
-export type Github = {
-  createdAt: string
-  description: string
-  name: string
-  url: string
-  stargazarCount: number
-  forkCount: number
-  languages: []
-}[]
+export type GithubProps = {
+  name: string;
+  description: string;
+  stars: number;
+  forks: number;
+  url: string;
+  languages: Languages[];
+}[];
 
-const useStyles = createStyles((theme) => ({
-  heading: {
-    marginTop: '4rem',
-    marginBottom: '2rem',
-    paddingBottom: '2rem',
-    borderBottom: '2px solid #E9ECEF',
-    '@media (max-width: 768px)': {
-      marginTop: '2.5rem',
-      paddingTop: '0px',
-      paddingBottom: '1.5rem',
-    },
-  },
-}));
-
-const Github: FC<any> = (props) => {
+const Github: FC<GithubProps> = (props) => {
   const { name, description, stars, forks, url, languages } = props;
-  const { classes } = useStyles();
-  console.log(props)
 
   return (
-    // <div>
-      <Container className='w-1/2'>
-      {/* <Title order={1} className={classes.heading}>GitHub</Title> */}
-      <Stack spacing={8}>
+    <a href={url} target="_blank" rel="noreferrer">
+      <Stack spacing={8} className="w-full mb-5">
         <Title order={3}>
-          <a href={url}>
-            {name}
-          </a>
+          <Text>{name}</Text>
         </Title>
         {description ? (
           <Text weight={500} lineClamp={1}>
@@ -55,68 +39,66 @@ const Github: FC<any> = (props) => {
             </Text>
           </Group>
           <Group spacing={4}>
-            {/* <GitFork size={16} color={iconColor} /> */}
+            <GitFork size={16} />
             <Text size="sm" color="dimmed" weight={700}>
               {forks}
             </Text>
           </Group>
         </Group>
-
-        {/* <LanguageBar languages={languages} />
-        <LanguageLegens languages={languages} /> */}
+        <LanguageBar languages={languages} />
+        <LanguageLegens languages={languages} />
       </Stack>
-      {/* {
-        github?.languages?.nodes?.map((language:any) => {
-          <Stack className='flex'>
-            <Text>{language.color}</Text>
-            <Text>{language.name}</Text>
-          </Stack>
-        })
-      } */}
-      {/* <LinkButton text="View on GitHub" href="/" /> */}
-    </Container>
-    // </div>
-  )
-}
+    </a>
+  );
+};
 
-// const LanguageBar: FC<any> = (props) => {
-//   const { languages } = props;
-//   console.log(languages.edges)
+type Languages = {
+  color: string;
+  ratio: number;
+  name: string;
+};
+type LanguageProps = {
+  languages: Languages[];
+};
 
-//   return (
-//     <Group spacing={0} sx={{ overflow: "hidden", borderRadius: 8 }} noWrap>
-//       {languages?.edges?.map((value, index) => (
-//         <Box
-//           key={index}
-//           sx={{
-//             width: `${(value.value * 100).toFixed(1)}%`,
-//             backgroundColor: value.color,
-//             height: 8,
-//           }}
-//         ></Box>
-//       ))}
-//     </Group>
-//   );
-// };
+const LanguageBar: FC<LanguageProps> = (props) => {
+  const { languages } = props;
+  console.log(languages);
 
-// const LanguageLegens: FC<any> = (props) => {
-//   const { languages } = props;
+  return (
+    <Group spacing={0} sx={{ overflow: "hidden", borderRadius: 8 }} noWrap>
+      {languages?.map((value, index) => (
+        <Box
+          key={index}
+          sx={{
+            width: `${(value.ratio * 100).toFixed(1)}%`,
+            backgroundColor: value.color,
+            height: 8,
+          }}
+        ></Box>
+      ))}
+    </Group>
+  );
+};
 
-//   return (
-//     <Group noWrap>
-//       {languages?.edeges?.map((value, index) => (
-//         <Group key={index} spacing={6} noWrap>
-//           {/* <DotIcon color={value.color} /> */}
-//           <Text size="sm" weight={700}>
-//             {value.node.name}
-//           </Text>
-//           {/* <Text size="sm" color="dimmed" weight={700}>
-//             {(value.value * 100).toFixed(1)}%
-//           </Text> */}
-//         </Group>
-//       ))}
-//     </Group>
-//   );
-// };
+const LanguageLegens: FC<LanguageProps> = (props) => {
+  const { languages } = props;
 
-export default Github
+  return (
+    <Group noWrap>
+      {languages?.map((value, index) => (
+        <Group key={index} spacing={6} noWrap>
+          {/* <DotIcon color={value.color} /> */}
+          <Text size="sm" weight={700}>
+            {value.name}
+          </Text>
+          <Text size="sm" color="dimmed" weight={700}>
+            {(value.ratio * 100).toFixed(1)}%
+          </Text>
+        </Group>
+      ))}
+    </Group>
+  );
+};
+
+export default Github;
