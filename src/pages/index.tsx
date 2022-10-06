@@ -1,23 +1,23 @@
 import type { GetStaticProps } from "next";
 import Head from "next/head";
-import styles from "../../src/styles/Home.module.css";
-import Top from "../components/top";
-import PortfolioSection from "../components/portfolioSection";
-import { portfolio } from "../components/portfolioList";
-import Github from "../components/githubComponent";
-import Twitter from "../components/twitterComponent";
-import { client } from "../libs/cmsClient";
+import styles from "@/styles/Home.module.css";
+import Top from "@/components/top";
+import PortfolioSection from "@/components/portfolioSection";
+import { portfolio } from "@/components/portfolioList";
+import Github from "@/components/githubComponent";
+import Twitter from "@/components/twitterComponent";
+import { client } from "@/libs/cmsClient";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { useMediaQuery } from "react-responsive";
 import { FC, useEffect, useState } from "react";
-import LinkButton from "../components/button";
+import LinkButton from "@/components/button";
 import useSWR from "swr";
-import { apolloClient } from "../libs/apolloClient";
-import { GithubProps, GithubType } from "../types/github";
-import { query } from "../libs/getGithubData";
-import { Blog, BlogData } from "../types/blog";
-import { Tweets } from "../types/tweet";
+import { apolloClient } from "@/libs/apolloClient";
+import { GithubProps, GithubType } from "@/types/github";
+import { query } from "@/libs/getGithubData";
+import { Blog, BlogData } from "@/types/blog";
+import { Tweets } from "@/types/tweet";
 import {
   Container,
   createStyles,

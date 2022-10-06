@@ -7,7 +7,7 @@ import {
   Title,
 } from "@mantine/core";
 import { Star, GitFork } from "tabler-icons-react";
-import { GithubProps, Languages } from "../types/github";
+import { GithubProps, Languages } from "@/types/github";
 
 const Github: FC<GithubProps> = (props) => {
   const { name, description, stars, forks, url, languages } = props;

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { Container, createStyles, Grid, Image, Stack, Text, Title } from '@mantine/core';
+import { Container, createStyles, Grid, Image, Text, Title } from '@mantine/core';
 import Link from 'next/link'
-import LinkButton from './button';
+import LinkButton from '@/components/button';
 
 type PortfolioSection = {
   portfolioSection: {

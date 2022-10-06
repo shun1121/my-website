@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Text, Title } from '@mantine/core';
 
-
 type BlogList = {
   blogList: {    
     title: string
@@ -10,7 +9,7 @@ type BlogList = {
   }[]
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   heading: {
     marginTop: '4rem',
     marginBottom: '2rem',
@@ -24,7 +23,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const About: FC<BlogList> = ({blogList}) => {
+const About: FC<BlogList> = () => {
   const { classes } = useStyles();
 
   return (

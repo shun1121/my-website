@@ -8,7 +8,7 @@ type Name = {
   name: string
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   title: {
     justifyContent: 'center',
     '@media (max-width: 768px)': {

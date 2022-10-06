@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import Layout from '../components/layout'
+import Layout from '@/components/layout'
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useState } from 'react'
 

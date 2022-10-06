@@ -1,12 +1,10 @@
 import React, { FC, ReactNode } from 'react';
-import { links } from '../components/link';
-import { Footer } from '../components/footer';
+import { links } from '@/components/link';
+import { Footer } from '@/components/footer';
 import { useState } from 'react';
 import { createStyles, Header, Container, Group, Burger, Stack } from '@mantine/core';
-// import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
-import { Toggle } from './toggle';
-
+import { Toggle } from '@/components/toggle';
 
 type Props = {
   children?: ReactNode
@@ -27,9 +25,6 @@ const useStyles = createStyles((theme) => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
-    // top: '0',
-    // bottom: '0',
-    // right: '0',
     alignItems: 'center',
     height: '100%',
     '@media (max-width: 400px)': {
@@ -39,7 +34,6 @@ const useStyles = createStyles((theme) => ({
 
   links: {
     display: 'flex',
-    // justifyContent: 'flex-end',
     [theme.fn.smallerThan('xs')]: {
       display: 'none',
     },

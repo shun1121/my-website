@@ -6,11 +6,11 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import LinkButton from "./button";
+import LinkButton from "@/components/button";
 import dayjs from "dayjs";
-import { Tweets } from "../types/tweet";
+import { Tweets } from "@/types/tweet";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   heading: {
     marginTop: "4rem",
     marginBottom: "2rem",
