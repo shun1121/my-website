@@ -7,8 +7,8 @@ import {
   Title,
 } from "@mantine/core";
 import LinkButton from "./button";
-import { Tweets } from "../pages";
 import dayjs from "dayjs";
+import { Tweets } from "../types/tweet";
 
 const useStyles = createStyles((theme) => ({
   heading: {
