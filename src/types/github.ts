@@ -36,3 +36,18 @@ export type GithubType = {
     }
   }
 }
+
+export type Languages = {
+  color: string;
+  ratio: number;
+  name: string;
+};
+
+export type GithubProps = {
+  name: string;
+  description: string;
+  stars: number;
+  forks: number;
+  url: string;
+  languages: Languages[];
+};

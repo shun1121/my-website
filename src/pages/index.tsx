@@ -4,7 +4,20 @@ import styles from "../../src/styles/Home.module.css";
 import Top from "../components/top";
 import PortfolioSection from "../components/portfolioSection";
 import { portfolio } from "../components/portfolioList";
-import Github, { GithubProps } from "../components/githubComponent";
+import Github from "../components/githubComponent";
+import Twitter from "../components/twitterComponent";
+import { client } from "../libs/cmsClient";
+import Link from "next/link";
+import dayjs from "dayjs";
+import { useMediaQuery } from "react-responsive";
+import { FC, useEffect, useState } from "react";
+import LinkButton from "../components/button";
+import useSWR from "swr";
+import { apolloClient } from "../libs/apolloClient";
+import { GithubProps, GithubType } from "../types/github";
+import { query } from "../libs/getGithubData";
+import { Blog, BlogData } from "../types/blog";
+import { Tweets } from "../types/tweet";
 import {
   Container,
   createStyles,
@@ -14,83 +27,6 @@ import {
   Title,
   Loader,
 } from "@mantine/core";
-import Twitter from "../components/twitterComponent";
-import { client } from "../libs/cmsClient";
-import { MicroCMSListResponse } from "microcms-js-sdk";
-import Link from "next/link";
-import dayjs from "dayjs";
-import { useMediaQuery } from "react-responsive";
-import { FC, useEffect, useState } from "react";
-import LinkButton from "../components/button";
-import useSWR from "swr";
-import { apolloClient } from "../libs/apolloClient";
-import { GithubType } from "../types/github";
-import { query } from "../libs/getGithubData";
-
-export type Blog = {
-  title: string;
-  body: string;
-};
-
-export type Data = {
-  contents: {
-    body: string;
-    createdAt: string;
-    id: string;
-    publishedAt: string;
-    revisedAt: string;
-    title: string;
-    updatedAt: string;
-  }[];
-  limit: number;
-  offset: number;
-  totalCount: number;
-};
-
-export type User = {
-  users: {
-    id: string;
-    name: string;
-    profile_image_url: string;
-    username: string;
-  }[];
-};
-
-export type Tweets = {
-  data: {
-    author_id: string;
-    context_annotations?: {
-      domain: {
-        description: string;
-        id: string;
-        name: string;
-      };
-      entry: {
-        id: string;
-        name: string;
-      };
-    }[];
-    conversation_id: string;
-    created_at: string;
-    id: string;
-    public_metrics: {
-      retweet_count: number;
-      reply_count: number;
-      like_count: number;
-      quote_count: number;
-    };
-    text: string;
-  }[];
-  includes: User;
-  meta: {
-    newest_id: string;
-    next_token: string;
-    oldest_id: string;
-    result_count: number;
-  };
-};
-
-type BlogData = MicroCMSListResponse<Blog>;
 
 type Props = {
   blogData: BlogData;
@@ -144,7 +80,6 @@ const fetcher = async (url: string) =>
 
 const Home: FC<Props> = (props) => {
   const { data, error } = useSWR<Tweets>("/api/twitter", fetcher);
-  console.log(props.githubData);
   const [isClient, setIsClient] = useState(false);
   const { classes } = useStyles();
   const isMobile = useMediaQuery({
@@ -262,7 +197,6 @@ export const getStaticProps: GetStaticProps = async () => {
       blogData: blogData,
       githubData: data.user.repositories.nodes.map((repository) => {
         const languages = repository.languages.edges.map((val) => {
-          console.log(repository.name);
           return {
             name: val.node.name,
             color: val.node.color,

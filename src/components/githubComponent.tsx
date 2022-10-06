@@ -7,15 +7,7 @@ import {
   Title,
 } from "@mantine/core";
 import { Star, GitFork } from "tabler-icons-react";
-
-export type GithubProps = {
-  name: string;
-  description: string;
-  stars: number;
-  forks: number;
-  url: string;
-  languages: Languages[];
-};
+import { GithubProps, Languages } from "../types/github";
 
 const Github: FC<GithubProps> = (props) => {
   const { name, description, stars, forks, url, languages } = props;
@@ -52,18 +44,12 @@ const Github: FC<GithubProps> = (props) => {
   );
 };
 
-type Languages = {
-  color: string;
-  ratio: number;
-  name: string;
-};
 type LanguageProps = {
   languages: Languages[];
 };
 
 const LanguageBar: FC<LanguageProps> = (props) => {
   const { languages } = props;
-  console.log(languages);
 
   return (
     <Group spacing={0} sx={{ overflow: "hidden", borderRadius: 8 }} noWrap>

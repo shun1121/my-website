@@ -35,7 +35,6 @@ export default async function getTweet(
       }
     );
 
-    // console.log(usersTweets)
     res.status(200).json(usersTweets);
   } catch (err) {
     console.log(err);
