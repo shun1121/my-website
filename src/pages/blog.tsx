@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
 import { client } from '../libs/cmsClient';
-import { GetStaticProps, NextPage } from 'next';
+import { GetStaticProps } from 'next';
 import { MicroCMSListResponse } from 'microcms-js-sdk';
-import { Blog } from '../pages';
 import dayjs from 'dayjs'
 import LinkButton from '../components/button';
+import { Blog } from '../types/blog'
 
 const useStyles = createStyles((theme) => ({
   heading: {
