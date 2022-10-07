@@ -1,11 +1,5 @@
 import React, { FC } from "react";
-import {
-  Box,
-  Group,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Box, Group, Stack, Text, Title } from "@mantine/core";
 import { Star, GitFork } from "tabler-icons-react";
 import { GithubProps, Languages } from "@/types/github";
 
@@ -71,7 +65,7 @@ const LanguageLegens: FC<LanguageProps> = (props) => {
   const { languages } = props;
 
   return (
-    <Group noWrap>
+    <Group sx={{ rowGap: 0 }}>
       {languages?.map((value, index) => (
         <Group key={index} spacing={6} noWrap>
           <Text size="sm" weight={700}>
