@@ -19,10 +19,10 @@ import { BlogList } from "@/components/Blog/Blog";
 import {
   Container,
   createStyles,
-  SimpleGrid,
   Text,
   Title,
   Loader,
+  Grid,
 } from "@mantine/core";
 
 type Props = {
@@ -95,43 +95,48 @@ const Home: FC<Props> = (props) => {
         <LinkButton text="View All" href="/blog" />
       </Container>
       <PortfolioSection portfolioSection={portfolio} />
-      <SimpleGrid cols={2} spacing="xs">
-        <Container>
-          <Title order={1} className={classes.heading}>
-            GitHub
-          </Title>
-          {props.githubData.map((repository, index) => {
-            return (
-              <Github
-                key={index}
-                name={repository.name}
-                description={repository.description}
-                stars={repository.stars}
-                forks={repository.forks}
-                url={repository.url}
-                languages={repository.languages}
-              />
-            );
-          })}
-          <LinkButton text="View on GitHub" href="/" />
-        </Container>
-        {data ? (
-          <Container>
+      <Container>
+        <Grid>
+          <Grid.Col sm={6}>
             <Title order={1} className={classes.heading}>
-              Twitter
+              GitHub
             </Title>
-            <Twitter twitter={data} />
-            <LinkButton
-              text="View on Twitter"
-              href={`https://twitter.com/${data.includes.users[0].username}`}
-            />
-          </Container>
-        ) : error ? (
-          <Text>エラー</Text>
-        ) : (
-          <Loader className="mx-auto my-auto" />
-        )}
-      </SimpleGrid>
+            {props.githubData.map((repository, index) => {
+              return (
+                <Github
+                  key={index}
+                  name={repository.name}
+                  description={repository.description}
+                  stars={repository.stars}
+                  forks={repository.forks}
+                  url={repository.url}
+                  languages={repository.languages}
+                />
+              );
+            })}
+            <LinkButton text="View on GitHub" href="/" />
+          </Grid.Col>
+          <Grid.Col sm={6}>
+            {data ? (
+              <Container>
+                <Title order={1} className={classes.heading}>
+                  Twitter
+                </Title>
+                <Twitter twitter={data} />
+                <LinkButton
+                  text="View on Twitter"
+                  href={`https://twitter.com/${data.includes.users[0].username}`}
+                />
+              </Container>
+            ) : 
+            error ? (
+              <Text>エラー</Text>
+            ) : (
+              <Loader className="mx-auto my-auto" />
+            )}
+          </Grid.Col>
+        </Grid>
+      </Container>
     </div>
   );
 };

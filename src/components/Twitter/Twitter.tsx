@@ -30,7 +30,7 @@ const useStyles = createStyles(() => ({
 const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
 
   return (
-    <Container className="max-w-[598px]">
+    <Container>
       {twitter.data.map((list, index) => (
         <a key={index} target="_blank" className="mb-10 flex" href={`https://twitter.com/${twitter.includes.users[0].username}/status/${twitter.data[index].id}`} rel="noreferrer" >
             <Avatar
