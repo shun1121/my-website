@@ -5,7 +5,7 @@ import { client } from '@/libs/cmsClient';
 import { GetStaticProps } from 'next';
 import { MicroCMSListResponse } from 'microcms-js-sdk';
 import dayjs from 'dayjs'
-import LinkButton from '@/components/button';
+import LinkButton from '@/components/Button/Button';
 import { Blog } from '@/types/blog'
 
 const useStyles = createStyles((theme) => ({

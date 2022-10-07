@@ -1,21 +1,21 @@
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import Top from "@/components/top";
-import PortfolioSection from "@/components/portfolioSection";
-import { portfolio } from "@/components/portfolioList";
-import Github from "@/components/githubComponent";
-import Twitter from "@/components/twitterComponent";
+import Top from "@/components/Top/Top";
+import PortfolioSection from "@/components/Portfolio/PortfolioSection";
+import { portfolio } from "@/components/Portfolio/PortfolioList";
+import Github from "@/components/Github/Github";
+import Twitter from "@/components/Twitter/Twitter";
 import { client } from "@/libs/cmsClient";
 import { FC } from "react";
-import LinkButton from "@/components/button";
+import LinkButton from "@/components/Button/Button";
 import useSWR from "swr";
 import { apolloClient } from "@/libs/apolloClient";
 import { GithubProps, GithubType } from "@/types/github";
 import { query } from "@/libs/getGithubData";
 import { Blog, BlogData } from "@/types/blog";
 import { Tweets } from "@/types/tweet";
-import { BlogList } from "@/components/blogList";
+import { BlogList } from "@/components/Blog/Blog";
 import {
   Container,
   createStyles,

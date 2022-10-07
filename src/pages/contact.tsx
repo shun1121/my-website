@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Title, TextInput, Group, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import LinkButton from '@/components/button';
+import LinkButton from '@/components/Button/Button';
 
 const useStyles = createStyles(() => ({
   heading: {

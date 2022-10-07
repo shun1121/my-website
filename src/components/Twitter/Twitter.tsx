@@ -6,7 +6,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import LinkButton from "@/components/button";
+import LinkButton from "@/components/Button/Button";
 import dayjs from "dayjs";
 import { Tweets } from "@/types/tweet";
 
@@ -36,7 +36,7 @@ const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
         Twitter
       </Title>
       {twitter.data.map((list, index) => (
-        <a key={index} className="mb-10 flex" href={`https://twitter.com/${twitter.includes.users[0].username}/status/${twitter.data[index].id}`} >
+        <a key={index} target="_blank" className="mb-10 flex" href={`https://twitter.com/${twitter.includes.users[0].username}/status/${twitter.data[index].id}`} rel="noreferrer" >
             <Avatar
               src={twitter.includes.users[0].profile_image_url}
               alt={twitter.includes.users[0].name}

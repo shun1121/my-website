@@ -1,10 +1,10 @@
 import React, { FC, ReactNode } from 'react';
-import { links } from '@/components/link';
-import { Footer } from '@/components/footer';
+import { links } from '@/components/Layout/Link';
+import { Footer } from '@/components/Footer/Footer';
 import { useState } from 'react';
 import { createStyles, Header, Container, Group, Burger, Stack } from '@mantine/core';
 import Link from 'next/link';
-import { Toggle } from '@/components/toggle';
+import { Toggle } from '@/components/Toggle/Toggle';
 
 type Props = {
   children?: ReactNode
