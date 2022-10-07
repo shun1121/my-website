@@ -116,7 +116,16 @@ const Home: FC<Props> = (props) => {
           <LinkButton text="View on GitHub" href="/" />
         </Container>
         {data ? (
-          <Twitter twitter={data} />
+          <Container>
+            <Title order={1} className={classes.heading}>
+              Twitter
+            </Title>
+            <Twitter twitter={data} />
+            <LinkButton
+              text="View on Twitter"
+              href={`https://twitter.com/${data.includes.users[0].username}`}
+            />
+          </Container>
         ) : error ? (
           <Text>エラー</Text>
         ) : (

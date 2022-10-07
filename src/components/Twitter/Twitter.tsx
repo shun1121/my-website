@@ -28,13 +28,9 @@ const useStyles = createStyles(() => ({
 }));
 
 const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
-  const { classes } = useStyles();
 
   return (
     <Container className="max-w-[598px]">
-      <Title order={1} className={classes.heading}>
-        Twitter
-      </Title>
       {twitter.data.map((list, index) => (
         <a key={index} target="_blank" className="mb-10 flex" href={`https://twitter.com/${twitter.includes.users[0].username}/status/${twitter.data[index].id}`} rel="noreferrer" >
             <Avatar
@@ -58,10 +54,6 @@ const Twitter: FC<{ twitter: Tweets }> = ({ twitter }) => {
             </div>
         </a>
       ))}
-      <LinkButton
-        text="View on Twitter"
-        href={`https://twitter.com/${twitter.includes.users[0].username}`}
-      />
     </Container>
   );
 };
