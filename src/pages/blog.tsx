@@ -43,7 +43,6 @@ const useStyles = createStyles((theme) => ({
 const Blog: FC<{blogData: MicroCMSListResponse<Blog>}> = ({ blogData }) => {
   const { classes } = useStyles();
   const blogList = blogData.contents
-  // const blogList = props　これだとエラーが出る。
 
   return (
     <Container>
@@ -76,7 +75,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       blogData: blogData
     },
-    // props: data.contents これだとエラーが出る。
   }
 }
 
