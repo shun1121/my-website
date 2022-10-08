@@ -68,6 +68,16 @@ const LanguageLegens: FC<LanguageProps> = (props) => {
     <Group sx={{ rowGap: 0 }}>
       {languages?.map((value, index) => (
         <Group key={index} spacing={6} noWrap>
+          {/* <div className="text-[26px] font-bold">・</div> */}
+          <Box
+            key={index}
+            sx={{
+              width: 8,
+              height: 8,
+              backgroundColor: value.color,
+              borderRadius: "5px"
+            }}
+        ></Box>
           <Text size="sm" weight={700}>
             {value.name}
           </Text>

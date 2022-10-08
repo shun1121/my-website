@@ -162,7 +162,12 @@ export const getStaticProps: GetStaticProps = async () => {
             color: val.node.color,
             ratio: val.size / repository.languages.totalSize, // 各言語のサイズ / リポジトリ全体の言語サイズ
           };
-        });
+        })
+        .sort((a, b) => {
+          // a, bが揃わない場合は、比較できないのでsort部分は行われない
+          // https://qiita.com/ymk83/items/3d53e0965a278b5cfd4d
+          return b.ratio - a.ratio;
+        })
         return {
           name: repository.name,
           description: repository.description,
