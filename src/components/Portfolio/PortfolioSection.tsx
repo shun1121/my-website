@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Container, createStyles, Grid, Image, Text, Title } from '@mantine/core';
+import { createStyles, Grid, Image, Text, Title } from '@mantine/core';
 import Link from 'next/link'
 import LinkButton from '@/components/Button/Button';
 

@@ -114,7 +114,7 @@ const Home: FC<Props> = (props) => {
                 />
               );
             })}
-            <LinkButton text="View on GitHub" href="/" />
+            <LinkButton text="View on GitHub" href="https://github.com/shun1121" />
           </Grid.Col>
           <Grid.Col sm={6}>
             {data ? (
@@ -160,12 +160,10 @@ export const getStaticProps: GetStaticProps = async () => {
           return {
             name: val.node.name,
             color: val.node.color,
-            ratio: val.size / repository.languages.totalSize, // 各言語のサイズ / リポジトリ全体の言語サイズ
+            ratio: val.size / repository.languages.totalSize,
           };
         })
         .sort((a, b) => {
-          // a, bが揃わない場合は、比較できないのでsort部分は行われない
-          // https://qiita.com/ymk83/items/3d53e0965a278b5cfd4d
           return b.ratio - a.ratio;
         })
         return {
