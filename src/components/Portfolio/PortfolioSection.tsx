@@ -53,7 +53,7 @@ const PortfolioSection: FC<PortfolioSection> = ({portfolioSection}) => {
   const { classes } = useStyles();
 
   return (
-    <Container>
+    <div className='px-10'>
       <Title order={1} className={classes.heading}>Portfolio</Title>
       <Grid gutter={40}>
         {portfolioSection.map((item, index) => (
@@ -74,7 +74,7 @@ const PortfolioSection: FC<PortfolioSection> = ({portfolioSection}) => {
         ))}
       </Grid>
       <LinkButton text="View All" href="/portfolio" />
-    </Container>
+    </div>
   )
 }
 
