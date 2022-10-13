@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import { Container, createStyles, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link'
-import { client } from '../libs/cmsClient';
-import { GetStaticProps, NextPage } from 'next';
+import { client } from '@/libs/cmsClient';
+import { GetStaticProps } from 'next';
 import { MicroCMSListResponse } from 'microcms-js-sdk';
-import { Blog } from '../pages';
 import dayjs from 'dayjs'
-import LinkButton from '../components/button';
+import LinkButton from '@/components/Button/Button';
+import { Blog } from '@/types/blog'
 
 const useStyles = createStyles((theme) => ({
   heading: {
@@ -43,7 +43,6 @@ const useStyles = createStyles((theme) => ({
 const Blog: FC<{blogData: MicroCMSListResponse<Blog>}> = ({ blogData }) => {
   const { classes } = useStyles();
   const blogList = blogData.contents
-  // const blogList = props　これだとエラーが出る。
 
   return (
     <Container>
@@ -76,7 +75,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       blogData: blogData
     },
-    // props: data.contents これだとエラーが出る。
   }
 }
 
