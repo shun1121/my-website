@@ -30,13 +30,16 @@ const About: FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Schema> = (data) => console.log(data);
-
+  const onSubmit: SubmitHandler<Schema> = (data) => {
+    console.log(data);
+    reset()
+  }
   return (
     <Container className="h-screen">
       <Title order={1} className={classes.heading}>
